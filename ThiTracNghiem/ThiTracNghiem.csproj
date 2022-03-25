@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1C35DA49-B089-4073-9F3B-7F4C968D7A5F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ThiTracNghiem</RootNamespace>
+    <AssemblyName>ThiTracNghiem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DS.cs">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGiaoVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGiaoVien.Designer.cs">
+      <DependentUpon>FrmGiaoVien.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMonHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMonHoc.Designer.cs">
+      <DependentUpon>frmMonHoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDangNhap.Designer.cs">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Recovery.cs" />
+    <EmbeddedResource Include="frmDangNhap.resx">
+      <DependentUpon>frmDangNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGiaoVien.resx">
+      <DependentUpon>FrmGiaoVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMonHoc.resx">
+      <DependentUpon>frmMonHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="DS.xsc">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+    <None Include="DS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DS.xss">
+      <DependentUpon>DS.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Text-Edit-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit-24-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete-2-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Refresh-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Add-24-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Actions-list-add-user-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Apps-session-Exit-icon-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem1.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem1.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem2.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem2.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem3.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem3.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem4.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barButtonItem4.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnBangDiemBaoCao.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnBangDiemBaoCao.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDangNhap.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDangNhap.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDangXuat.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDangXuat.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDe.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDSDK.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnDSDK.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnGhiMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnGhiMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnGiangVienDK.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnHuy.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnInDanhSachMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnInDanhSachMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnKhoa.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnLop.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnMonHoc.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnPhucHoiMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnPhucHoiMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnRedo.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnSuaMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnSuaMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnTaiLaiMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnTaiLaiMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnTaoTK.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnTaoTK.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThemMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThemMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThiThu.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoat.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoat.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoatMain.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoatMain.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoatMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnThoatMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnXoaMH.ImageOptions.Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnXoaMH.ImageOptions.LargeImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Business-Department-32-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Add-24-icon11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Refresh-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete-2-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diploma-Certificate-32-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Excel-24-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Excel-48-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit-24-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Keyboard-48-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search-icon-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Teacher-male-icon-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Text-Edit-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btnChuyenKhoaGV.Image.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
