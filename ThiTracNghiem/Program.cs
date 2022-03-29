@@ -34,7 +34,7 @@ namespace ThiTracNghiem
         public static BindingSource bds_dspm = new BindingSource(); //Giữ danh sách các phân mảnh
 
 
-        public static frmMain frmChinh;
+        public static FrmMain frmChinh;
         public static frmDangNhap frmDangNhap;
 
         public static int KetNoi()

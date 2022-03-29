@@ -96,3 +96,4 @@ C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\es\DevExpress.Of
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\ja\DevExpress.Office.v21.2.Core.resources.dll
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\ru\DevExpress.Office.v21.2.Core.resources.dll
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmGiaoVien.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmKhoa.resources

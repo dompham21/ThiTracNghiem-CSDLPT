@@ -69,11 +69,17 @@
     <Compile Include="FrmGiaoVien.Designer.cs">
       <DependentUpon>FrmGiaoVien.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMonHoc.cs">
+    <Compile Include="FrmKhoa.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMonHoc.Designer.cs">
-      <DependentUpon>frmMonHoc.cs</DependentUpon>
+    <Compile Include="FrmKhoa.Designer.cs">
+      <DependentUpon>FrmKhoa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMonHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMonHoc.Designer.cs">
+      <DependentUpon>FrmMonHoc.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDangNhap.cs">
       <SubType>Form</SubType>
@@ -83,11 +89,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="frmMain.cs">
+    <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Recovery.cs" />
     <EmbeddedResource Include="frmDangNhap.resx">
@@ -96,11 +102,14 @@
     <EmbeddedResource Include="FrmGiaoVien.resx">
       <DependentUpon>FrmGiaoVien.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <EmbeddedResource Include="FrmKhoa.resx">
+      <DependentUpon>FrmKhoa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMonHoc.resx">
-      <DependentUpon>frmMonHoc.cs</DependentUpon>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMonHoc.resx">
+      <DependentUpon>FrmMonHoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

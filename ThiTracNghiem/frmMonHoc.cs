@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace ThiTracNghiem
 {
-    public partial class frmMonHoc : Form
+    public partial class FrmMonHoc : Form
     {
         private Boolean isThem = false;
         private Boolean isSua = false;
@@ -21,7 +21,7 @@ namespace ThiTracNghiem
         private Stack<Recovery> stackRedo = new Stack<Recovery>();
         private String beforeUpdateString;
 
-        public frmMonHoc()
+        public FrmMonHoc()
         {
             InitializeComponent();
         }
@@ -94,10 +94,11 @@ namespace ThiTracNghiem
         {
             try
             {
+                gcMonHoc.Enabled = false;
+
                 btnGhi.Enabled = btnHuy.Enabled = true;
                 bdsMonHoc.AddNew();
                 isThem = true;
-                gcMonHoc.Enabled = false;
                 txtTenMH.Enabled = txtMaMH.Enabled = true;
                 txtMaMH.Focus();
                 btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
@@ -114,7 +115,7 @@ namespace ThiTracNghiem
             gcMonHoc.Enabled = true;
             txtTenMH.Enabled = false;
             txtMaMH.Enabled = false;
-            btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = true;
+            btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = true;
             try
             {
                 bdsMonHoc.EndEdit();
@@ -135,6 +136,7 @@ namespace ThiTracNghiem
             bool isValid = ValidateEmpty(); //Kiem tra ma va ten mon hoc empty
             if (!isValid) return;
             btnHuy.Enabled = btnGhi.Enabled = false;
+
             if (isThem)
             {
                 //Kiem tra ma va ten mon hoc ton tai
@@ -150,12 +152,14 @@ namespace ThiTracNghiem
                 if (kq.Equals("1"))
                 {
                     txtMaMH.Focus();
+                    btnHuy.Enabled = btnGhi.Enabled = true;
                     XtraMessageBox.Show("Mã môn học đã tồn tại, vui lòng nhập mã khác", "", MessageBoxButtons.OK);
                     return;
                 }
                 else if (kq.Equals("2"))
                 {
                     txtTenMH.Focus();
+                    btnHuy.Enabled = btnGhi.Enabled = true;
                     XtraMessageBox.Show("Tên môn học đã tồn tại, vui lòng nhập tên khác", "", MessageBoxButtons.OK);
                     return;
                 }
@@ -166,6 +170,7 @@ namespace ThiTracNghiem
                     stackUndo.Push(new Recovery("'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'", "INSERT", maMH));
 
                     WriteToDB();
+
                     bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
 
                     isThem = false;
@@ -249,12 +254,13 @@ namespace ThiTracNghiem
             bdsMonHoc.CancelEdit();
             btnHuy.Enabled = btnGhi.Enabled = false;
             isSua = isThem = false;
-            gcMonHoc.Enabled = true;
             txtTenMH.Enabled = false;
             txtMaMH.Enabled = false;
             btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = true;
             this.tbMonHoc.Connection.ConnectionString = Program.connstr;
             this.tbMonHoc.Fill(this.DS.MONHOC);
+            gcMonHoc.Enabled = true;
+
         }
 
         private void btnThoat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -329,7 +335,6 @@ namespace ThiTracNghiem
                         bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
                         return;
                     }
-                    if (bdsMonHoc.Count == 0) btnXoa.Enabled = false;
                 }
                 else return;
             }

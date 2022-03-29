@@ -171,7 +171,7 @@ namespace ThiTracNghiem
                 else
                 {
                     this.Hide();
-                    Program.frmChinh = new frmMain();
+                    Program.frmChinh = new FrmMain();
                     Program.frmChinh.MaGVSV.Text = "Mã số: " + Program.username;
                     Program.frmChinh.HoTen.Text = "Họ tên: " + Program.mHoten;
                     Program.frmChinh.Nhom.Text = "Nhóm: " + Program.mGroup;

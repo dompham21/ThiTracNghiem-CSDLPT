@@ -12,14 +12,14 @@ using System.Windows.Forms;
 
 namespace ThiTracNghiem
 {
-    public partial class frmMain : DevExpress.XtraBars.Ribbon.RibbonForm
+    public partial class FrmMain : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         private Form form;
-        private frmMonHoc frmMonHoc = null;
-        private FrmGiaoVien frmKhoa = null;
+        private FrmMonHoc frmMonHoc = null;
+        private FrmKhoa frmKhoa = null;
         private FrmGiaoVien frmGiaoVien = null;
 
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
         }
@@ -60,12 +60,12 @@ namespace ThiTracNghiem
 
         private void btnMonHoc_ItemClick(object sender, ItemClickEventArgs e)
         {
-            form = this.CheckExists(typeof(frmMonHoc));
+            form = this.CheckExists(typeof(FrmMonHoc));
             if (form == null)
             {
 
                 IsMdiContainer = true;
-                frmMonHoc = new frmMonHoc();
+                frmMonHoc = new FrmMonHoc();
                 frmMonHoc.MdiParent = this;
 
                 frmMonHoc.Show();
@@ -75,12 +75,12 @@ namespace ThiTracNghiem
 
         private void btnKhoa_ItemClick(object sender, ItemClickEventArgs e)
         {
-            form = this.CheckExists(typeof(FrmGiaoVien));
+            form = this.CheckExists(typeof(FrmKhoa));
             if (form == null)
             {
 
                 IsMdiContainer = true;
-                frmKhoa = new FrmGiaoVien();
+                frmKhoa = new FrmKhoa();
                 frmKhoa.MdiParent = this;
 
                 frmKhoa.Show();
