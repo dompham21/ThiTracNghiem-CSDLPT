@@ -15,9 +15,20 @@
     <Shape ID="DesignTable:COSO" ZOrder="12" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
     <Shape ID="DesignTable:LOP" ZOrder="11" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
     <Shape ID="DesignTable:SINHVIEN" ZOrder="10" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
-    <Shape ID="DesignTable:sp_Lay_DS_Khoa" ZOrder="1" X="673" Y="0" Height="115" Width="238" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
   </Shapes>
   <Connectors>
+    <Connector ID="DesignRelation:FK_BANGDIEM_MONHOC" ZOrder="17" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>272</X>
+          <Y>127</Y>
+        </Point>
+        <Point>
+          <X>342</X>
+          <Y>127</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:FK_BANGDIEM_SINHVIEN1" ZOrder="9" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -38,15 +49,19 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_BANGDIEM_MONHOC" ZOrder="17" LineWidth="11">
+    <Connector ID="DesignRelation:FK_BODE_MONHOC" ZOrder="16" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>272</X>
-          <Y>127</Y>
+          <X>255</X>
+          <Y>185</Y>
+        </Point>
+        <Point>
+          <X>255</X>
+          <Y>348</Y>
         </Point>
         <Point>
           <X>342</X>
-          <Y>127</Y>
+          <Y>348</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -70,39 +85,19 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_BODE_MONHOC" ZOrder="16" LineWidth="11">
+    <Connector ID="DesignRelation:FK_GIAOVIEN_DANGKY_MONHOC1" ZOrder="15" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>255</X>
+          <X>247</X>
           <Y>185</Y>
         </Point>
         <Point>
-          <X>255</X>
-          <Y>348</Y>
+          <X>247</X>
+          <Y>704</Y>
         </Point>
         <Point>
           <X>342</X>
-          <Y>348</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_GIAOVIEN_DANGKY_LOP" ZOrder="7" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>118</X>
-          <Y>0</Y>
-        </Point>
-        <Point>
-          <X>118</X>
-          <Y>-30</Y>
-        </Point>
-        <Point>
-          <X>118</X>
-          <Y>-30</Y>
-        </Point>
-        <Point>
-          <X>118</X>
-          <Y>0</Y>
+          <Y>704</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -126,19 +121,23 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_GIAOVIEN_DANGKY_MONHOC1" ZOrder="15" LineWidth="11">
+    <Connector ID="DesignRelation:FK_GIAOVIEN_DANGKY_LOP" ZOrder="7" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>247</X>
-          <Y>185</Y>
+          <X>118</X>
+          <Y>0</Y>
         </Point>
         <Point>
-          <X>247</X>
-          <Y>704</Y>
+          <X>118</X>
+          <Y>-30</Y>
         </Point>
         <Point>
-          <X>342</X>
-          <Y>704</Y>
+          <X>118</X>
+          <Y>-30</Y>
+        </Point>
+        <Point>
+          <X>118</X>
+          <Y>0</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -158,6 +157,26 @@
         </Point>
         <Point>
           <X>94</X>
+          <Y>0</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_MONHOC_GIAOVIEN" ZOrder="1" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>78</X>
+          <Y>0</Y>
+        </Point>
+        <Point>
+          <X>78</X>
+          <Y>-30</Y>
+        </Point>
+        <Point>
+          <X>78</X>
+          <Y>-30</Y>
+        </Point>
+        <Point>
+          <X>78</X>
           <Y>0</Y>
         </Point>
       </RoutePoints>

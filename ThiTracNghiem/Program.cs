@@ -36,6 +36,7 @@ namespace ThiTracNghiem
 
         public static FrmMain frmChinh;
         public static frmDangNhap frmDangNhap;
+        
 
         public static int KetNoi()
         {

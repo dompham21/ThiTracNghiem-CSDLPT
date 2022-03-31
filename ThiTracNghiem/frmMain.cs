@@ -18,6 +18,8 @@ namespace ThiTracNghiem
         private FrmMonHoc frmMonHoc = null;
         private FrmKhoa frmKhoa = null;
         private FrmGiaoVien frmGiaoVien = null;
+        private FrmLop frmLop = null;
+        private FrmSinhVien frmSinhVien = null;
 
         public FrmMain()
         {
@@ -99,6 +101,36 @@ namespace ThiTracNghiem
                 frmGiaoVien.MdiParent = this;
 
                 frmGiaoVien.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnLop_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmLop));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmLop = new FrmLop();
+                frmLop.MdiParent = this;
+
+                frmLop.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnSinhVien_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmSinhVien));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmSinhVien = new FrmSinhVien();
+                frmSinhVien.MdiParent = this;
+
+                frmSinhVien.Show();
             }
             else form.Activate();
         }

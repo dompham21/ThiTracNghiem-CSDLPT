@@ -36,9 +36,13 @@ namespace ThiTracNghiem
             this.btnDeThi = new DevExpress.XtraBars.BarButtonItem();
             this.btnTaoTaiKhoan = new DevExpress.XtraBars.BarButtonItem();
             this.btnDangXuat = new DevExpress.XtraBars.BarButtonItem();
+            this.btnGiaoVien = new DevExpress.XtraBars.BarButtonItem();
+            this.btnSinhVien = new DevExpress.XtraBars.BarButtonItem();
             this.rbpQuanLy = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.rbpgKhoa = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpgLop = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rnpgGiaoVien = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbgpSinhVien = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpgMonHoc = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpgGVDK = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpgDeThi = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -51,10 +55,6 @@ namespace ThiTracNghiem
             this.MaGVSV = new System.Windows.Forms.ToolStripStatusLabel();
             this.HoTen = new System.Windows.Forms.ToolStripStatusLabel();
             this.Nhom = new System.Windows.Forms.ToolStripStatusLabel();
-            this.rnpgGiaoVien = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.btnGiaoVien = new DevExpress.XtraBars.BarButtonItem();
-            this.rbgpSinhVien = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.btnSinhVien = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +62,6 @@ namespace ThiTracNghiem
             // ribbon
             // 
             this.ribbon.AccessibleRole = System.Windows.Forms.AccessibleRole.Separator;
-            this.ribbon.EmptyAreaImageOptions.ImagePadding = new System.Windows.Forms.Padding(14, 13, 14, 13);
             this.ribbon.ExpandCollapseItem.Id = 0;
             this.ribbon.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbon.ExpandCollapseItem,
@@ -77,7 +76,7 @@ namespace ThiTracNghiem
             this.btnGiaoVien,
             this.btnSinhVien});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.ribbon.Margin = new System.Windows.Forms.Padding(1);
             this.ribbon.MaxItemId = 22;
             this.ribbon.Name = "ribbon";
             this.ribbon.OptionsMenuMinWidth = 152;
@@ -102,6 +101,7 @@ namespace ThiTracNghiem
             this.btnLop.Id = 13;
             this.btnLop.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnLop.ImageOptions.SvgImage")));
             this.btnLop.Name = "btnLop";
+            this.btnLop.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLop_ItemClick);
             // 
             // btnMonHoc
             // 
@@ -143,6 +143,22 @@ namespace ThiTracNghiem
             this.btnDangXuat.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnDangXuat.ImageOptions.LargeImage")));
             this.btnDangXuat.Name = "btnDangXuat";
             // 
+            // btnGiaoVien
+            // 
+            this.btnGiaoVien.Caption = "Giáo viên";
+            this.btnGiaoVien.Id = 20;
+            this.btnGiaoVien.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGiaoVien.ImageOptions.SvgImage")));
+            this.btnGiaoVien.Name = "btnGiaoVien";
+            this.btnGiaoVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGiaoVien_ItemClick);
+            // 
+            // btnSinhVien
+            // 
+            this.btnSinhVien.Caption = "Sinh viên";
+            this.btnSinhVien.Id = 21;
+            this.btnSinhVien.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnSinhVien.ImageOptions.SvgImage")));
+            this.btnSinhVien.Name = "btnSinhVien";
+            this.btnSinhVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSinhVien_ItemClick);
+            // 
             // rbpQuanLy
             // 
             this.rbpQuanLy.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -165,6 +181,16 @@ namespace ThiTracNghiem
             // 
             this.rbpgLop.ItemLinks.Add(this.btnLop);
             this.rbpgLop.Name = "rbpgLop";
+            // 
+            // rnpgGiaoVien
+            // 
+            this.rnpgGiaoVien.ItemLinks.Add(this.btnGiaoVien);
+            this.rnpgGiaoVien.Name = "rnpgGiaoVien";
+            // 
+            // rbgpSinhVien
+            // 
+            this.rbgpSinhVien.ItemLinks.Add(this.btnSinhVien);
+            this.rbgpSinhVien.Name = "rbgpSinhVien";
             // 
             // rbpgMonHoc
             // 
@@ -243,32 +269,7 @@ namespace ThiTracNghiem
             this.Nhom.Size = new System.Drawing.Size(41, 17);
             this.Nhom.Text = "Nhóm";
             // 
-            // rnpgGiaoVien
-            // 
-            this.rnpgGiaoVien.ItemLinks.Add(this.btnGiaoVien);
-            this.rnpgGiaoVien.Name = "rnpgGiaoVien";
-            // 
-            // btnGiaoVien
-            // 
-            this.btnGiaoVien.Caption = "Giáo viên";
-            this.btnGiaoVien.Id = 20;
-            this.btnGiaoVien.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGiaoVien.ImageOptions.SvgImage")));
-            this.btnGiaoVien.Name = "btnGiaoVien";
-            this.btnGiaoVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnGiaoVien_ItemClick);
-            // 
-            // rbgpSinhVien
-            // 
-            this.rbgpSinhVien.ItemLinks.Add(this.btnSinhVien);
-            this.rbgpSinhVien.Name = "rbgpSinhVien";
-            // 
-            // btnSinhVien
-            // 
-            this.btnSinhVien.Caption = "Sinh viên";
-            this.btnSinhVien.Id = 21;
-            this.btnSinhVien.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnSinhVien.ImageOptions.SvgImage")));
-            this.btnSinhVien.Name = "btnSinhVien";
-            // 
-            // frmMain
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -276,8 +277,8 @@ namespace ThiTracNghiem
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ribbon);
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
-            this.Name = "frmMain";
+            this.Margin = new System.Windows.Forms.Padding(1);
+            this.Name = "FrmMain";
             this.Ribbon = this.ribbon;
             this.Text = "Form Chính";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

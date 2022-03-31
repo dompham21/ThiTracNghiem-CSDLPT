@@ -50,40 +50,40 @@ namespace ThiTracNghiem
             this.cbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCoSo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.cbCoSo.FormattingEnabled = true;
-            this.cbCoSo.Location = new System.Drawing.Point(314, 39);
-            this.cbCoSo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbCoSo.Location = new System.Drawing.Point(135, 17);
+            this.cbCoSo.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.cbCoSo.Name = "cbCoSo";
-            this.cbCoSo.Size = new System.Drawing.Size(383, 39);
+            this.cbCoSo.Size = new System.Drawing.Size(166, 23);
             this.cbCoSo.TabIndex = 0;
             this.cbCoSo.SelectedIndexChanged += new System.EventHandler(this.cbCoSo_SelectedIndexChanged);
             // 
             // tbTaiKhoan
             // 
             this.tbTaiKhoan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.tbTaiKhoan.Location = new System.Drawing.Point(312, 128);
-            this.tbTaiKhoan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbTaiKhoan.Location = new System.Drawing.Point(134, 57);
+            this.tbTaiKhoan.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.tbTaiKhoan.Name = "tbTaiKhoan";
-            this.tbTaiKhoan.Size = new System.Drawing.Size(383, 48);
+            this.tbTaiKhoan.Size = new System.Drawing.Size(166, 26);
             this.tbTaiKhoan.TabIndex = 4;
             // 
             // tbMatKhau
             // 
             this.tbMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.tbMatKhau.Location = new System.Drawing.Point(312, 203);
-            this.tbMatKhau.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbMatKhau.Location = new System.Drawing.Point(134, 91);
+            this.tbMatKhau.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.tbMatKhau.Name = "tbMatKhau";
             this.tbMatKhau.PasswordChar = '*';
-            this.tbMatKhau.Size = new System.Drawing.Size(383, 48);
+            this.tbMatKhau.Size = new System.Drawing.Size(166, 26);
             this.tbMatKhau.TabIndex = 5;
             // 
             // btDangNhap
             // 
             this.btDangNhap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btDangNhap.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btDangNhap.Location = new System.Drawing.Point(199, 419);
-            this.btDangNhap.Margin = new System.Windows.Forms.Padding(2);
+            this.btDangNhap.Location = new System.Drawing.Point(85, 188);
+            this.btDangNhap.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.btDangNhap.Name = "btDangNhap";
-            this.btDangNhap.Size = new System.Drawing.Size(215, 64);
+            this.btDangNhap.Size = new System.Drawing.Size(92, 29);
             this.btDangNhap.TabIndex = 6;
             this.btDangNhap.Text = "Đăng Nhập";
             this.btDangNhap.UseVisualStyleBackColor = true;
@@ -104,38 +104,39 @@ namespace ThiTracNghiem
             this.panel1.Controls.Add(this.tbTaiKhoan);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(820, 548);
+            this.panel1.Size = new System.Drawing.Size(361, 248);
             this.panel1.TabIndex = 7;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // tbMaSV
             // 
             this.tbMaSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.tbMaSV.Location = new System.Drawing.Point(312, 284);
-            this.tbMaSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tbMaSV.Location = new System.Drawing.Point(134, 127);
+            this.tbMaSV.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.tbMaSV.Name = "tbMaSV";
-            this.tbMaSV.Size = new System.Drawing.Size(383, 48);
+            this.tbMaSV.Size = new System.Drawing.Size(166, 26);
             this.tbMaSV.TabIndex = 14;
             // 
             // labelMaSV
             // 
             this.labelMaSV.AutoSize = true;
             this.labelMaSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.labelMaSV.Location = new System.Drawing.Point(142, 287);
+            this.labelMaSV.Location = new System.Drawing.Point(61, 129);
+            this.labelMaSV.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.labelMaSV.Name = "labelMaSV";
-            this.labelMaSV.Size = new System.Drawing.Size(125, 40);
+            this.labelMaSV.Size = new System.Drawing.Size(57, 20);
             this.labelMaSV.TabIndex = 13;
             this.labelMaSV.Text = "Mã SV";
             // 
             // btThoat
             // 
             this.btThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btThoat.Location = new System.Drawing.Point(496, 419);
-            this.btThoat.Margin = new System.Windows.Forms.Padding(2);
+            this.btThoat.Location = new System.Drawing.Point(213, 188);
+            this.btThoat.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.btThoat.Name = "btThoat";
-            this.btThoat.Size = new System.Drawing.Size(164, 64);
+            this.btThoat.Size = new System.Drawing.Size(70, 29);
             this.btThoat.TabIndex = 11;
             this.btThoat.Text = "Thoát";
             this.btThoat.UseVisualStyleBackColor = true;
@@ -145,10 +146,10 @@ namespace ThiTracNghiem
             // 
             this.checkBoxSV.AutoSize = true;
             this.checkBoxSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.checkBoxSV.Location = new System.Drawing.Point(314, 346);
-            this.checkBoxSV.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.checkBoxSV.Location = new System.Drawing.Point(135, 155);
+            this.checkBoxSV.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.checkBoxSV.Name = "checkBoxSV";
-            this.checkBoxSV.Size = new System.Drawing.Size(197, 44);
+            this.checkBoxSV.Size = new System.Drawing.Size(92, 24);
             this.checkBoxSV.TabIndex = 10;
             this.checkBoxSV.Text = "Sinh viên";
             this.checkBoxSV.UseVisualStyleBackColor = true;
@@ -158,10 +159,11 @@ namespace ThiTracNghiem
             // 
             this.labelCoSo.AutoSize = true;
             this.labelCoSo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.labelCoSo.Location = new System.Drawing.Point(166, 39);
+            this.labelCoSo.Location = new System.Drawing.Point(71, 17);
+            this.labelCoSo.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.labelCoSo.Name = "labelCoSo";
-            this.labelCoSo.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelCoSo.Size = new System.Drawing.Size(115, 40);
+            this.labelCoSo.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.labelCoSo.Size = new System.Drawing.Size(52, 20);
             this.labelCoSo.TabIndex = 9;
             this.labelCoSo.Text = "Cơ sở";
             // 
@@ -169,9 +171,10 @@ namespace ThiTracNghiem
             // 
             this.labelMatKhau.AutoSize = true;
             this.labelMatKhau.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMatKhau.Location = new System.Drawing.Point(113, 203);
+            this.labelMatKhau.Location = new System.Drawing.Point(48, 91);
+            this.labelMatKhau.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.labelMatKhau.Name = "labelMatKhau";
-            this.labelMatKhau.Size = new System.Drawing.Size(165, 40);
+            this.labelMatKhau.Size = new System.Drawing.Size(75, 20);
             this.labelMatKhau.TabIndex = 8;
             this.labelMatKhau.Text = "Mật khẩu";
             // 
@@ -179,19 +182,20 @@ namespace ThiTracNghiem
             // 
             this.labelTaiKhoan.AutoSize = true;
             this.labelTaiKhoan.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTaiKhoan.Location = new System.Drawing.Point(113, 125);
+            this.labelTaiKhoan.Location = new System.Drawing.Point(48, 56);
+            this.labelTaiKhoan.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.labelTaiKhoan.Name = "labelTaiKhoan";
-            this.labelTaiKhoan.Size = new System.Drawing.Size(175, 40);
+            this.labelTaiKhoan.Size = new System.Drawing.Size(78, 20);
             this.labelTaiKhoan.TabIndex = 7;
             this.labelTaiKhoan.Text = "Tài khoản";
             // 
             // frmDangNhap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 548);
+            this.ClientSize = new System.Drawing.Size(361, 248);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.Name = "frmDangNhap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng Nhập";

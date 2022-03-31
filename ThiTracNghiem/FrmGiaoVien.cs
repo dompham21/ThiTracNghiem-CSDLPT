@@ -27,20 +27,17 @@ namespace ThiTracNghiem
 
         private void FrmGiaoVien_Load(object sender, EventArgs e)
         {
-            
+           
 
 
-            cbbCoSo.DataSource = Program.bds_dspm;
+            cbbCoSo.DataSource = Program.bds_dspm.DataSource;
             cbbCoSo.DisplayMember = "TENCS";
             cbbCoSo.ValueMember = "TENSERVER";
             cbbCoSo.SelectedIndex = Program.mCoSo;
+            cbbCoSo.Enabled = true;
 
             DS.EnforceConstraints = false; //Tat kiem tra ranh buoc (khoa ngoai)
 
-
-            // TODO: This line of code loads data into the 'DS.sp_Lay_DS_Khoa' table. You can move, or remove it, as needed.
-            this.tbDSKhoaADT.Connection.ConnectionString = Program.connstr;
-            this.tbDSKhoaADT.Fill(this.DS.sp_Lay_DS_Khoa);
             // TODO: This line of code loads data into the 'DS.LOP' table. You can move, or remove it, as needed.
             this.tbLopADT.Connection.ConnectionString = Program.connstr;
             this.tbLopADT.Fill(this.DS.LOP);
@@ -62,14 +59,12 @@ namespace ThiTracNghiem
             // nhóm CoSo thì ta chỉ cho phép toàn quyền làm việc trên cơ sở  đó , không được log vào cơ sở  khác,   
             if (Program.mGroup == "COSO")
             {
-                cbbCoSo.Enabled = false;
                 btnThem.Visibility = btnGhi.Visibility = btnXoa.Visibility = btnSua.Visibility
                    = btnUndo.Visibility = btnRedo.Visibility = btnHuy.Visibility =  DevExpress.XtraBars.BarItemVisibility.Always;
             }
             //Truong thì login đó có thể đăng nhập vào bất kỳ phân mảnh  nào để xem dữ liệu 
             else if (Program.mGroup == "TRUONG")
             {
-                cbbCoSo.Enabled = true;
                 btnThem.Visibility = btnGhi.Visibility = btnXoa.Visibility = btnSua.Visibility
                     = btnUndo.Visibility = btnRedo.Visibility = btnHuy.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             }
@@ -518,6 +513,10 @@ namespace ThiTracNghiem
             }
             else
             {
+                stackUndo.Clear();
+                stackRedo.Clear();
+                DS.EnforceConstraints = false; //Tat kiem tra ranh buoc (khoa ngoai)
+
                 this.tbLopADT.Connection.ConnectionString = Program.connstr;
                 this.tbLopADT.Fill(this.DS.LOP);
 

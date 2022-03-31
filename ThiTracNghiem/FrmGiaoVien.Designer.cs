@@ -80,7 +80,6 @@
             this.labelMaGV = new DevExpress.XtraEditors.LabelControl();
             this.txtMaGV = new DevExpress.XtraEditors.TextEdit();
             this.gcKhoa = new DevExpress.XtraGrid.GridControl();
-            this.bdsDSKhoa = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colMAKH = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTENKH = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -91,8 +90,6 @@
             this.bdsBoDe = new System.Windows.Forms.BindingSource(this.components);
             this.tbBoDeADT = new ThiTracNghiem.DSTableAdapters.BODETableAdapter();
             this.tbLopADT = new ThiTracNghiem.DSTableAdapters.LOPTableAdapter();
-            this.tbDSKhoaADT = new ThiTracNghiem.DSTableAdapters.sp_Lay_DS_KhoaTableAdapter();
-            this.fKspLayDSKhoaGIAOVIENBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -111,12 +108,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtHoGV.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcKhoa)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsDSKhoa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fKspLayDSKhoaGIAOVIENBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // barManager2
@@ -308,23 +303,23 @@
             // cbbCoSo
             // 
             this.cbbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbCoSo.Font = new System.Drawing.Font("Tahoma", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbbCoSo.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbCoSo.FormattingEnabled = true;
             this.cbbCoSo.Location = new System.Drawing.Point(251, 16);
             this.cbbCoSo.Margin = new System.Windows.Forms.Padding(1);
             this.cbbCoSo.Name = "cbbCoSo";
-            this.cbbCoSo.Size = new System.Drawing.Size(304, 24);
+            this.cbbCoSo.Size = new System.Drawing.Size(304, 25);
             this.cbbCoSo.TabIndex = 12;
             this.cbbCoSo.SelectedIndexChanged += new System.EventHandler(this.cbbCoSo_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(159, 17);
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(190, 19);
             this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 17);
+            this.label1.Size = new System.Drawing.Size(44, 17);
             this.label1.TabIndex = 11;
             this.label1.Text = "Cơ sở";
             // 
@@ -387,7 +382,7 @@
             // 
             // bdsGiaoVien
             // 
-            this.bdsGiaoVien.DataSource = this.fKspLayDSKhoaGIAOVIENBindingSource;
+            this.bdsGiaoVien.DataSource = this.fKGIAOVIENKHOABindingSource;
             // 
             // fKGIAOVIENKHOABindingSource
             // 
@@ -481,7 +476,8 @@
             // cbbTenKhoa
             // 
             this.cbbTenKhoa.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bdsKhoa, "MAKH", true));
-            this.cbbTenKhoa.DataSource = this.bdsDSKhoa;
+            this.cbbTenKhoa.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bdsKhoa, "TENKH", true));
+            this.cbbTenKhoa.DataSource = this.bdsKhoa;
             this.cbbTenKhoa.DisplayMember = "TENKH";
             this.cbbTenKhoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbTenKhoa.Enabled = false;
@@ -495,7 +491,7 @@
             // 
             // txtMaKhoa
             // 
-            this.txtMaKhoa.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsDSKhoa, "MAKH", true));
+            this.txtMaKhoa.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsKhoa, "MAKH", true));
             this.txtMaKhoa.Enabled = false;
             this.txtMaKhoa.Location = new System.Drawing.Point(415, 166);
             this.txtMaKhoa.MenuManager = this.barManager2;
@@ -615,7 +611,7 @@
             // 
             // gcKhoa
             // 
-            this.gcKhoa.DataSource = this.bdsDSKhoa;
+            this.gcKhoa.DataSource = this.bdsKhoa;
             this.gcKhoa.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gcKhoa.Location = new System.Drawing.Point(0, 99);
             this.gcKhoa.MainView = this.gridView1;
@@ -625,11 +621,6 @@
             this.gcKhoa.TabIndex = 22;
             this.gcKhoa.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
-            // 
-            // bdsDSKhoa
-            // 
-            this.bdsDSKhoa.DataMember = "sp_Lay_DS_Khoa";
-            this.bdsDSKhoa.DataSource = this.DS;
             // 
             // gridView1
             // 
@@ -706,15 +697,6 @@
             // 
             this.tbLopADT.ClearBeforeFill = true;
             // 
-            // tbDSKhoaADT
-            // 
-            this.tbDSKhoaADT.ClearBeforeFill = true;
-            // 
-            // fKspLayDSKhoaGIAOVIENBindingSource
-            // 
-            this.fKspLayDSKhoaGIAOVIENBindingSource.DataMember = "FK_sp_Lay_DS_Khoa_GIAOVIEN";
-            this.fKspLayDSKhoaGIAOVIENBindingSource.DataSource = this.bdsDSKhoa;
-            // 
             // FrmGiaoVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -754,12 +736,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtHoGV.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcKhoa)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsDSKhoa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.fKspLayDSKhoaGIAOVIENBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -827,8 +807,5 @@
         private DevExpress.XtraGrid.Columns.GridColumn colDIACHI;
         private DevExpress.XtraGrid.Columns.GridColumn colMAKH1;
         private System.Windows.Forms.BindingSource fKGIAOVIENKHOABindingSource;
-        private System.Windows.Forms.BindingSource bdsDSKhoa;
-        private DSTableAdapters.sp_Lay_DS_KhoaTableAdapter tbDSKhoaADT;
-        private System.Windows.Forms.BindingSource fKspLayDSKhoaGIAOVIENBindingSource;
     }
 }
