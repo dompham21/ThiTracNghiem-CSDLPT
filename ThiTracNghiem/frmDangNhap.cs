@@ -102,6 +102,7 @@ namespace ThiTracNghiem
             Program.mloginDN = Program.mlogin;
             Program.passwordDN = Program.password;
 
+            //Khong can thiet
             if (checkBoxSV.Checked == true)
             {
                 //Kiem tra ma sv co ton tai khong 

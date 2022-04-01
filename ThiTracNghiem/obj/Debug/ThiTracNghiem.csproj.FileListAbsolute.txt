@@ -98,3 +98,4 @@ C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\ru\DevExpress.Of
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmGiaoVien.resources
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmKhoa.resources
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmLop.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmSinhVien.resources

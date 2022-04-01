@@ -314,7 +314,6 @@ namespace ThiTracNghiem
             {
                 stackUndo.Clear();
                 stackRedo.Clear();
-
                 DS.EnforceConstraints = false; //Tat kiem tra ranh buoc (khoa ngoai)
 
                 // TODO: This line of code loads data into the 'DS.GIAOVIEN' table. You can move, or remove it, as needed.
@@ -328,6 +327,17 @@ namespace ThiTracNghiem
                 // TODO: This line of code loads data into the 'DS.KHOA' table. You can move, or remove it, as needed.
                 this.tbKhoaADT.Connection.ConnectionString = Program.connstr;
                 this.tbKhoaADT.Fill(this.DS.KHOA);
+
+                String tenCS = cbbCoSo.Text;
+                String strLenh = "EXEC SP_Lay_MaCS_Tu_TenCS N'" + tenCS + "'";
+                //Thực hiện sp
+                Program.myReader = Program.ExecSqlDataReader(strLenh);
+
+                if (Program.myReader == null) return;
+                Program.myReader.Read();
+                maCS = Program.myReader.GetString(0);     // Lay maCS
+                Program.myReader.Close();
+
             }
         }
 
