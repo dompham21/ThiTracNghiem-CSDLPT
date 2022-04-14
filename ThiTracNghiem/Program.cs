@@ -24,6 +24,8 @@ namespace ThiTracNghiem
         public static String database = "TN_CSDLPT";
         public static String remoteLogin = "HTKN";
         public static String remotePassword = "123456";
+        public static String svLogin = "sv";
+        public static String svPassword = "123456";
         public static String mloginDN = "";
         public static String passwordDN = "";
         public static String mGroup = "";
@@ -36,7 +38,10 @@ namespace ThiTracNghiem
 
         public static FrmMain frmChinh;
         public static frmDangNhap frmDangNhap;
-        
+        public static FrmThiThu frmThiThu = null;
+        public static FrmKQThi frmKQThi = null;
+
+
 
         public static int KetNoi()
         {

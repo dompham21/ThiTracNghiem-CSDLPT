@@ -99,3 +99,11 @@ C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.Fr
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmKhoa.resources
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmLop.resources
 C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmSinhVien.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmGVDK.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmBoDe.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\BCrypt.Net.dll
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\bin\Debug\BCrypt.Net.xml
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmChuanBiThiThu.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.FrmThiThu.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.CauHoi.resources
+C:\Users\dom\source\repos\ThiTracNghiem\ThiTracNghiem\obj\Debug\ThiTracNghiem.frmKQThi.resources

@@ -297,18 +297,18 @@
             this.panelControl1.Location = new System.Drawing.Point(0, 40);
             this.panelControl1.Margin = new System.Windows.Forms.Padding(1);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1284, 59);
-            this.panelControl1.TabIndex = 13;
+            this.panelControl1.Size = new System.Drawing.Size(1284, 77);
+            this.panelControl1.TabIndex = 36;
             // 
             // cbbCoSo
             // 
             this.cbbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbCoSo.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbbCoSo.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbCoSo.FormattingEnabled = true;
-            this.cbbCoSo.Location = new System.Drawing.Point(251, 16);
+            this.cbbCoSo.Location = new System.Drawing.Point(320, 23);
             this.cbbCoSo.Margin = new System.Windows.Forms.Padding(1);
             this.cbbCoSo.Name = "cbbCoSo";
-            this.cbbCoSo.Size = new System.Drawing.Size(304, 25);
+            this.cbbCoSo.Size = new System.Drawing.Size(375, 23);
             this.cbbCoSo.TabIndex = 12;
             this.cbbCoSo.SelectedIndexChanged += new System.EventHandler(this.cbbCoSo_SelectedIndexChanged);
             // 
@@ -316,7 +316,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(190, 19);
+            this.label1.Location = new System.Drawing.Point(253, 25);
             this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 17);
@@ -613,11 +613,13 @@
             // 
             this.gcKhoa.DataSource = this.bdsKhoa;
             this.gcKhoa.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcKhoa.Location = new System.Drawing.Point(0, 99);
+            this.gcKhoa.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(17, 16, 17, 16);
+            this.gcKhoa.Location = new System.Drawing.Point(0, 117);
             this.gcKhoa.MainView = this.gridView1;
+            this.gcKhoa.Margin = new System.Windows.Forms.Padding(17, 16, 17, 16);
             this.gcKhoa.MenuManager = this.barManager2;
             this.gcKhoa.Name = "gcKhoa";
-            this.gcKhoa.Size = new System.Drawing.Size(1284, 429);
+            this.gcKhoa.Size = new System.Drawing.Size(1284, 411);
             this.gcKhoa.TabIndex = 22;
             this.gcKhoa.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -628,6 +630,7 @@
             this.colMAKH,
             this.colTENKH,
             this.colMACS});
+            this.gridView1.DetailHeight = 1805;
             this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.None;
             this.gridView1.GridControl = this.gcKhoa;
             this.gridView1.Name = "gridView1";
@@ -639,36 +642,36 @@
             this.colMAKH.AppearanceHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.colMAKH.Caption = "Mã khoa";
             this.colMAKH.FieldName = "MAKH";
-            this.colMAKH.MinWidth = 45;
+            this.colMAKH.MinWidth = 240;
             this.colMAKH.Name = "colMAKH";
             this.colMAKH.OptionsColumn.AllowEdit = false;
             this.colMAKH.Visible = true;
             this.colMAKH.VisibleIndex = 0;
-            this.colMAKH.Width = 273;
+            this.colMAKH.Width = 1458;
             // 
             // colTENKH
             // 
             this.colTENKH.AppearanceHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.colTENKH.Caption = "Tên khoa";
             this.colTENKH.FieldName = "TENKH";
-            this.colTENKH.MinWidth = 45;
+            this.colTENKH.MinWidth = 240;
             this.colTENKH.Name = "colTENKH";
             this.colTENKH.OptionsColumn.AllowEdit = false;
             this.colTENKH.Visible = true;
             this.colTENKH.VisibleIndex = 1;
-            this.colTENKH.Width = 554;
+            this.colTENKH.Width = 2959;
             // 
             // colMACS
             // 
             this.colMACS.AppearanceHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.colMACS.Caption = "Mã cơ sở";
             this.colMACS.FieldName = "MACS";
-            this.colMACS.MinWidth = 45;
+            this.colMACS.MinWidth = 240;
             this.colMACS.Name = "colMACS";
             this.colMACS.OptionsColumn.AllowEdit = false;
             this.colMACS.Visible = true;
             this.colMACS.VisibleIndex = 2;
-            this.colMACS.Width = 432;
+            this.colMACS.Width = 2308;
             // 
             // bdsLop
             // 

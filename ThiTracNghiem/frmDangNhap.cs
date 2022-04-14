@@ -24,10 +24,6 @@ namespace ThiTracNghiem
 
         private void frmDangNhap_Load(object sender, EventArgs e)
         {
-
-            labelMaSV.Visible = false;
-            tbMaSV.Visible = false;
-
             if (KetNoiCSDLGoc() == 0) return;
             LayDSPM();
             cbCoSo.SelectedIndex = 1; cbCoSo.SelectedIndex = 0;
@@ -79,19 +75,35 @@ namespace ThiTracNghiem
 
         private void btDangNhap_Click(object sender, EventArgs e)
         {
-            if (tbTaiKhoan.Text.Trim() == "" || tbMatKhau.Text.Trim() == "")
+            if (tbTaiKhoan.Text.Trim() == "")
             {
-                XtraMessageBox.Show("Login name và password không được trống", "", MessageBoxButtons.OK);
+                if(checkBoxSV.Checked)
+                    XtraMessageBox.Show("Mã sinh viên không được trống", "", MessageBoxButtons.OK);
+                else
+                    XtraMessageBox.Show("Tài khoản không được trống", "", MessageBoxButtons.OK);
+
+
+                tbTaiKhoan.Focus();
                 return;
             }
-            if (tbMaSV.Text.Trim() == "" && checkBoxSV.Checked == true)
+
+            if (tbMatKhau.Text.Trim() == "")
             {
-                XtraMessageBox.Show("Bạn chưa nhập mã sinh viên", "", MessageBoxButtons.OK);
+                XtraMessageBox.Show("Mật khẩu không được trống", "", MessageBoxButtons.OK);
+                tbMatKhau.Focus();
                 return;
             }
-            Program.mlogin = tbTaiKhoan.Text;
-            Program.password = tbMatKhau.Text;
-            Program.mSV = tbMaSV.Text;
+
+            if (checkBoxSV.Checked) {
+                Program.mlogin = Program.svLogin;
+                Program.password = Program.svPassword;
+            }
+            else
+            {
+                Program.mlogin = tbTaiKhoan.Text;
+                Program.password = tbMatKhau.Text;
+            }
+            
 
 
             // Đăng nhập thất bại
@@ -101,19 +113,8 @@ namespace ThiTracNghiem
             Program.mCoSo = cbCoSo.SelectedIndex;
             Program.mloginDN = Program.mlogin;
             Program.passwordDN = Program.password;
-
-            //Khong can thiet
-            if (checkBoxSV.Checked == true)
-            {
-                //Kiem tra ma sv co ton tai khong 
-                String sql = "EXEC SP_KT_SV_DangNhap '" + tbMaSV.Text + "'";
-                int kq = Program.ExecSqlNonQuery(sql);
-                if (kq == 1)
-                {
-                    return;
-                }
-            }
-
+            if (checkBoxSV.Checked) Program.mSV = tbTaiKhoan.Text.Trim();
+           
             string strLenh;
             if (checkBoxSV.Checked == false)
             {
@@ -121,7 +122,7 @@ namespace ThiTracNghiem
             }
             else
             {
-                strLenh = "EXEC SP_Lay_Thong_Tin_SV_Tu_Login  '" + Program.mlogin + "' , " + "'" + Program.mSV + "'";
+                strLenh = "EXEC SP_Lay_Thong_Tin_SV_Tu_Login  '" + Program.mSV + "' , " + "'" + tbMatKhau.Text.Trim() + "'";
             }
 
             //Thực hiện sp
@@ -130,36 +131,17 @@ namespace ThiTracNghiem
             if (Program.myReader == null) return;
             Program.myReader.Read();
 
-            // Check giáo viên nhưng lại lấy tài khoản sinh viên đăng nhập
-            if (checkBoxSV.Checked == false)
-            {
-                if (Program.myReader.GetString(2).Trim().Equals("Sinhvien"))
-                {
-                    XtraMessageBox.Show("Bạn đang đăng nhập tài khoản có quyền Sinhvien. \nVui lòng kiểm tra lại.", "", MessageBoxButtons.OK);
-                    return;
-                }
-            }
-            // Check sinh viên nhưng lại lấy Giangvien đăng nhập
-            else
-            {
-                if (Program.myReader.GetString(2).Trim().Equals("Giangvien"))
-                {
-                    XtraMessageBox.Show("Bạn đang đăng nhập tài khoản có quyền của Giangvien." +
-                        "\n Vui lòng kiểm tra lại thông tin đăng nhập.", "", MessageBoxButtons.OK);
-                    return;
-                }
-            }
-
-            Program.username = Program.myReader.GetString(0);     // Lay user name
-            if (Convert.IsDBNull(Program.username))
+            if (Convert.IsDBNull(Program.myReader.GetString(1)))
             {
                 XtraMessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu\n Bạn xem lại username, password", "", MessageBoxButtons.OK);
                 return;
             }
             else
             {
+                Program.username = Program.myReader.GetString(0);
                 Program.mHoten = Program.myReader.GetString(1);
                 Program.mGroup = Program.myReader.GetString(2);
+
                 Program.myReader.Close();
                 Program.conn.Close();
 
@@ -187,14 +169,11 @@ namespace ThiTracNghiem
         {
             if (checkBoxSV.Checked == true)
             {
-                labelMaSV.Visible = true;
-                tbMaSV.Visible = true;
+                labelTaiKhoan.Text = "Mã SV";
             }
             else
             {
-                labelMaSV.Visible = false;
-                tbMaSV.Text = "";
-                tbMaSV.Visible = false;
+                labelTaiKhoan.Text = "Tài khoản";
             }
         }
 

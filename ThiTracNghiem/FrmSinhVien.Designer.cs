@@ -65,6 +65,8 @@
             this.colDIACHI = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMALOPSV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtPassword = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.cbbTenLop = new System.Windows.Forms.ComboBox();
             this.labelTenKhoa = new DevExpress.XtraEditors.LabelControl();
             this.dateNgaySinh = new DevExpress.XtraEditors.DateEdit();
@@ -103,6 +105,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgaySinh.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgaySinh.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).BeginInit();
@@ -450,6 +453,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txtPassword);
+            this.panel1.Controls.Add(this.labelControl3);
             this.panel1.Controls.Add(this.cbbTenLop);
             this.panel1.Controls.Add(this.labelTenKhoa);
             this.panel1.Controls.Add(this.dateNgaySinh);
@@ -469,6 +474,30 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(593, 237);
             this.panel1.TabIndex = 1;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "PASSWORD", true));
+            this.txtPassword.Enabled = false;
+            this.txtPassword.Location = new System.Drawing.Point(414, 107);
+            this.txtPassword.MenuManager = this.barManager2;
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Properties.Appearance.Options.UseFont = true;
+            this.txtPassword.Properties.PasswordChar = '*';
+            this.txtPassword.Properties.UseMaskAsDisplayFormat = false;
+            this.txtPassword.Size = new System.Drawing.Size(155, 24);
+            this.txtPassword.TabIndex = 31;
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelControl3.Appearance.Options.UseFont = true;
+            this.labelControl3.Location = new System.Drawing.Point(323, 110);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(56, 17);
+            this.labelControl3.TabIndex = 30;
+            this.labelControl3.Text = "Mật khẩu";
             // 
             // cbbTenLop
             // 
@@ -508,8 +537,6 @@
             this.dateNgaySinh.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateNgaySinh.Properties.CalendarTimeProperties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
-            this.dateNgaySinh.Properties.MaxValue = new System.DateTime(2021, 12, 31, 23, 59, 0, 0);
-            this.dateNgaySinh.Properties.MinValue = new System.DateTime(1980, 1, 1, 0, 0, 0, 0);
             this.dateNgaySinh.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.dateNgaySinh.Size = new System.Drawing.Size(149, 24);
             this.dateNgaySinh.TabIndex = 19;
@@ -643,6 +670,7 @@
             this.tableAdapterManager.BANGDIEMTableAdapter = this.tbBangDiemADT;
             this.tableAdapterManager.BODETableAdapter = null;
             this.tableAdapterManager.COSOTableAdapter = null;
+            this.tableAdapterManager.CT_BAITHITableAdapter = null;
             this.tableAdapterManager.GIAOVIEN_DANGKYTableAdapter = this.tbGVDKyADT;
             this.tableAdapterManager.GIAOVIENTableAdapter = null;
             this.tableAdapterManager.KHOATableAdapter = null;
@@ -761,6 +789,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgaySinh.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgaySinh.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).EndInit();
@@ -839,5 +868,7 @@
         private System.Windows.Forms.ComboBox cbbTenLop;
         private DevExpress.XtraEditors.LabelControl labelTenKhoa;
         private System.Windows.Forms.BindingSource fKSINHVIENLOPBindingSource;
+        private DevExpress.XtraEditors.TextEdit txtPassword;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
     }
 }

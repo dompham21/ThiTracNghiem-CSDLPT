@@ -58,7 +58,12 @@ namespace ThiTracNghiem
             checkStateUndoRedo();
 
             btnHuy.Enabled = btnGhi.Enabled = false;
-            
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword("123456");
+            MessageBox.Show(passwordHash);
+            bool verified = BCrypt.Net.BCrypt.Verify("123456", passwordHash);
+            MessageBox.Show(verified.ToString());
+            txtPassword.Text =passwordHash;
+
 
         }
 
@@ -153,7 +158,7 @@ namespace ThiTracNghiem
                 btnGhi.Enabled = btnHuy.Enabled = true;
                 bdsSinhVien.AddNew();
                 isThem = true;
-                txtMaSV.Enabled = txtHoSV.Enabled = txtTenSV.Enabled = txtDiaChi.Enabled = dateNgaySinh.Enabled = true;
+                txtMaSV.Enabled = txtHoSV.Enabled = txtTenSV.Enabled = txtDiaChi.Enabled = dateNgaySinh.Enabled = txtPassword.Enabled = true;
                 txtMaSV.Focus();
                 btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
             }
@@ -232,6 +237,7 @@ namespace ThiTracNghiem
                 else
                 {
                     string maSV = txtMaSV.Text.Trim();
+                    txtPassword.Text = BCrypt.Net.BCrypt.HashPassword(txtPassword.Text.Trim());
 
                     stackUndo.Push(new Recovery("N'" + maSV + "', N'" + txtHoSV.Text.Trim() + "', N'"
                     + txtMaSV.Text.Trim() + "', N'" + txtDiaChi.Text.Trim() + "', '" + dateNgaySinh.Text.Trim() + "', N'" + txtMaLop.Text.Trim() + "'", "INSERT", maSV));

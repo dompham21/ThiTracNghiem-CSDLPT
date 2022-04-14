@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -55,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CauHoi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CauHoi.Designer.cs">
+      <DependentUpon>CauHoi.cs</DependentUpon>
+    </Compile>
     <Compile Include="DS.cs">
       <DependentUpon>DS.xsd</DependentUpon>
     </Compile>
@@ -63,17 +72,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="FrmBoDe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBoDe.Designer.cs">
+      <DependentUpon>FrmBoDe.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGiaoVien.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmGiaoVien.Designer.cs">
       <DependentUpon>FrmGiaoVien.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmGVDK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGVDK.Designer.cs">
+      <DependentUpon>FrmGVDK.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmKhoa.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmKhoa.Designer.cs">
       <DependentUpon>FrmKhoa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmKQThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmKQThi.Designer.cs">
+      <DependentUpon>FrmKQThi.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmLop.cs">
       <SubType>Form</SubType>
@@ -99,6 +126,18 @@
     <Compile Include="FrmSinhVien.Designer.cs">
       <DependentUpon>FrmSinhVien.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmChuanBiThiThu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmChuanBiThiThu.Designer.cs">
+      <DependentUpon>FrmChuanBiThiThu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmThiThu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmThiThu.Designer.cs">
+      <DependentUpon>FrmThiThu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FrmMain.cs">
@@ -108,14 +147,26 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Recovery.cs" />
+    <EmbeddedResource Include="CauHoi.resx">
+      <DependentUpon>CauHoi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBoDe.resx">
+      <DependentUpon>FrmBoDe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDangNhap.resx">
       <DependentUpon>frmDangNhap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGiaoVien.resx">
       <DependentUpon>FrmGiaoVien.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmGVDK.resx">
+      <DependentUpon>FrmGVDK.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmKhoa.resx">
       <DependentUpon>FrmKhoa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmKQThi.resx">
+      <DependentUpon>FrmKQThi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLop.resx">
       <DependentUpon>FrmLop.cs</DependentUpon>
@@ -128,6 +179,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSinhVien.resx">
       <DependentUpon>FrmSinhVien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmChuanBiThiThu.resx">
+      <DependentUpon>FrmChuanBiThiThu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmThiThu.resx">
+      <DependentUpon>FrmThiThu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -151,6 +208,7 @@
     <None Include="DS.xss">
       <DependentUpon>DS.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

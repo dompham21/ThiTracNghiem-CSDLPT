@@ -20,7 +20,9 @@ namespace ThiTracNghiem
         private FrmGiaoVien frmGiaoVien = null;
         private FrmLop frmLop = null;
         private FrmSinhVien frmSinhVien = null;
-
+        private FrmGVDK frmGVDK = null;
+        private FrmBoDe frmBoDe = null;
+        private FrmChuanBiThiThu frmChuanBiThiThu = null;
         public FrmMain()
         {
             InitializeComponent();
@@ -131,6 +133,51 @@ namespace ThiTracNghiem
                 frmSinhVien.MdiParent = this;
 
                 frmSinhVien.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnGVDK_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmGVDK));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmGVDK = new FrmGVDK();
+                frmGVDK.MdiParent = this;
+
+                frmGVDK.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnDeThi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmBoDe));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmBoDe = new FrmBoDe();
+                frmBoDe.MdiParent = this;
+
+                frmBoDe.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnThiThu_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmChuanBiThiThu));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmChuanBiThiThu = new FrmChuanBiThiThu();
+                frmChuanBiThiThu.MdiParent = this;
+
+                frmChuanBiThiThu.Show();
             }
             else form.Activate();
         }

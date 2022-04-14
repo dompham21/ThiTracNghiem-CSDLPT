@@ -11,12 +11,20 @@ namespace ThiTracNghiem
         private string sqlBeforeUpdateString;
         private string maPosition;
 
+        public Recovery(string sqlString, string type)
+        {
+            this.sqlString = sqlString;
+            this.type = type;
+        }
+
         public Recovery(string sqlString, string type, string maPosition)
         {
             this.sqlString = sqlString;
             this.type = type;
             this.maPosition = maPosition;
         }
+
+
 
         public Recovery(string sqlString, string sqlBeforeUpdateString, string type, string maPosition)
         {
