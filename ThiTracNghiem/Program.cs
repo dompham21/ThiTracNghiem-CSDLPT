@@ -36,12 +36,16 @@ namespace ThiTracNghiem
         public static BindingSource bds_dspm = new BindingSource(); //Giữ danh sách các phân mảnh
 
 
-        public static FrmMain frmChinh;
-        public static frmDangNhap frmDangNhap;
-        public static FrmThiThu frmThiThu = null;
+        public static FrmMain frmChinh = null;
+        public static FrmDangNhap frmDangNhap;
+        public static FrmThi frmThi = null;
         public static FrmKQThi frmKQThi = null;
+        public static FrmMainSV frmMainSV;
 
-
+        public static String FULLNAME_PATTERN =
+            "^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +
+            "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +
+            "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$";
 
         public static int KetNoi()
         {
@@ -118,12 +122,12 @@ namespace ThiTracNghiem
         }
 
 
-
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            frmDangNhap = new frmDangNhap();
+            frmDangNhap = new FrmDangNhap();
             Application.Run(frmDangNhap);
         }
     }

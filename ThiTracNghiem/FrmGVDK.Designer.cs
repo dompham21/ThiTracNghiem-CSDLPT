@@ -55,12 +55,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dateNgayThi = new DevExpress.XtraEditors.DateEdit();
             this.bdsGVDK = new System.Windows.Forms.BindingSource(this.components);
+            this.dateNgayThi = new DevExpress.XtraEditors.DateEdit();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            this.numThoiGian = new System.Windows.Forms.NumericUpDown();
-            this.numSoCau = new System.Windows.Forms.NumericUpDown();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.cbbLanThi = new System.Windows.Forms.ComboBox();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
@@ -77,7 +75,7 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.cbbTenGV = new System.Windows.Forms.ComboBox();
-            this.bdsDSGiaoVien = new System.Windows.Forms.BindingSource(this.components);
+            this.bdsDSGK = new System.Windows.Forms.BindingSource(this.components);
             this.txtMaGV = new DevExpress.XtraEditors.TextEdit();
             this.labelMaKhoa = new DevExpress.XtraEditors.LabelControl();
             this.labelTenKhoa = new DevExpress.XtraEditors.LabelControl();
@@ -95,7 +93,9 @@
             this.colTHOIGIAN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tbMonHocADT = new ThiTracNghiem.DSTableAdapters.MONHOCTableAdapter();
             this.tbLopADT = new ThiTracNghiem.DSTableAdapters.LOPTableAdapter();
-            this.tbDSGiaoVienADT = new ThiTracNghiem.DSTableAdapters.SP_DS_GiaoVienTableAdapter();
+            this.tbDSGVienADT = new ThiTracNghiem.DSTableAdapters.DSGVTableAdapter();
+            this.numSoCau = new DevExpress.XtraEditors.SpinEdit();
+            this.numThoiGian = new DevExpress.XtraEditors.SpinEdit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -104,19 +104,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgayThi.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgayThi.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numThoiGian)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSoCau)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMon.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGiaoVien)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcGVDK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSoCau.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numThoiGian.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // bar2
@@ -353,11 +353,11 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.numThoiGian);
+            this.panel1.Controls.Add(this.numSoCau);
             this.panel1.Controls.Add(this.dateNgayThi);
             this.panel1.Controls.Add(this.labelControl9);
             this.panel1.Controls.Add(this.labelControl8);
-            this.panel1.Controls.Add(this.numThoiGian);
-            this.panel1.Controls.Add(this.numSoCau);
             this.panel1.Controls.Add(this.labelControl7);
             this.panel1.Controls.Add(this.cbbLanThi);
             this.panel1.Controls.Add(this.labelControl6);
@@ -381,6 +381,11 @@
             this.panel1.Size = new System.Drawing.Size(1280, 202);
             this.panel1.TabIndex = 0;
             // 
+            // bdsGVDK
+            // 
+            this.bdsGVDK.DataMember = "GIAOVIEN_DANGKY";
+            this.bdsGVDK.DataSource = this.DS;
+            // 
             // dateNgayThi
             // 
             this.dateNgayThi.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsGVDK, "NGAYTHI", true));
@@ -402,11 +407,6 @@
             this.dateNgayThi.Size = new System.Drawing.Size(195, 24);
             this.dateNgayThi.TabIndex = 35;
             // 
-            // bdsGVDK
-            // 
-            this.bdsGVDK.DataMember = "GIAOVIEN_DANGKY";
-            this.bdsGVDK.DataSource = this.DS;
-            // 
             // labelControl9
             // 
             this.labelControl9.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -426,51 +426,6 @@
             this.labelControl8.Size = new System.Drawing.Size(55, 17);
             this.labelControl8.TabIndex = 33;
             this.labelControl8.Text = "Thời gian";
-            // 
-            // numThoiGian
-            // 
-            this.numThoiGian.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bdsGVDK, "THOIGIAN", true));
-            this.numThoiGian.Enabled = false;
-            this.numThoiGian.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numThoiGian.Location = new System.Drawing.Point(700, 152);
-            this.numThoiGian.Maximum = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
-            this.numThoiGian.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            this.numThoiGian.Name = "numThoiGian";
-            this.numThoiGian.Size = new System.Drawing.Size(120, 25);
-            this.numThoiGian.TabIndex = 32;
-            this.numThoiGian.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-            // 
-            // numSoCau
-            // 
-            this.numSoCau.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.bdsGVDK, "SOCAUTHI", true));
-            this.numSoCau.Enabled = false;
-            this.numSoCau.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numSoCau.Location = new System.Drawing.Point(382, 152);
-            this.numSoCau.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numSoCau.Name = "numSoCau";
-            this.numSoCau.Size = new System.Drawing.Size(120, 25);
-            this.numSoCau.TabIndex = 31;
-            this.numSoCau.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // labelControl7
             // 
@@ -635,7 +590,7 @@
             // cbbTenGV
             // 
             this.cbbTenGV.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bdsGVDK, "MAGV", true));
-            this.cbbTenGV.DataSource = this.bdsDSGiaoVien;
+            this.cbbTenGV.DataSource = this.bdsDSGK;
             this.cbbTenGV.DisplayMember = "TEN";
             this.cbbTenGV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbTenGV.Enabled = false;
@@ -648,10 +603,10 @@
             this.cbbTenGV.ValueMember = "MAGV";
             this.cbbTenGV.SelectedIndexChanged += new System.EventHandler(this.cbbTenGV_SelectedIndexChanged);
             // 
-            // bdsDSGiaoVien
+            // bdsDSGK
             // 
-            this.bdsDSGiaoVien.DataMember = "SP_DS_GiaoVien";
-            this.bdsDSGiaoVien.DataSource = this.DS;
+            this.bdsDSGK.DataMember = "DSGV";
+            this.bdsDSGK.DataSource = this.DS;
             // 
             // txtMaGV
             // 
@@ -824,9 +779,69 @@
             // 
             this.tbLopADT.ClearBeforeFill = true;
             // 
-            // tbDSGiaoVienADT
+            // tbDSGVienADT
             // 
-            this.tbDSGiaoVienADT.ClearBeforeFill = true;
+            this.tbDSGVienADT.ClearBeforeFill = true;
+            // 
+            // numSoCau
+            // 
+            this.numSoCau.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsGVDK, "SOCAUTHI", true));
+            this.numSoCau.EditValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numSoCau.Enabled = false;
+            this.numSoCau.Location = new System.Drawing.Point(382, 151);
+            this.numSoCau.MenuManager = this.barManager2;
+            this.numSoCau.Name = "numSoCau";
+            this.numSoCau.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numSoCau.Properties.Appearance.Options.UseFont = true;
+            this.numSoCau.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.numSoCau.Properties.MaskSettings.Set("mask", "d");
+            this.numSoCau.Properties.MaxValue = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numSoCau.Properties.MinValue = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numSoCau.Size = new System.Drawing.Size(120, 24);
+            this.numSoCau.TabIndex = 37;
+            // 
+            // numThoiGian
+            // 
+            this.numThoiGian.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsGVDK, "THOIGIAN", true));
+            this.numThoiGian.EditValue = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numThoiGian.Enabled = false;
+            this.numThoiGian.Location = new System.Drawing.Point(700, 151);
+            this.numThoiGian.MenuManager = this.barManager2;
+            this.numThoiGian.Name = "numThoiGian";
+            this.numThoiGian.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numThoiGian.Properties.Appearance.Options.UseFont = true;
+            this.numThoiGian.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.numThoiGian.Properties.MaskSettings.Set("mask", "d");
+            this.numThoiGian.Properties.MaxValue = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.numThoiGian.Properties.MinValue = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numThoiGian.Size = new System.Drawing.Size(120, 24);
+            this.numThoiGian.TabIndex = 38;
             // 
             // FrmGVDK
             // 
@@ -857,19 +872,19 @@
             this.groupControl1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgayThi.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateNgayThi.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numThoiGian)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSoCau)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMon.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGiaoVien)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcGVDK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSoCau.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numThoiGian.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -922,8 +937,6 @@
         private DSTableAdapters.LOPTableAdapter tbLopADT;
         private DevExpress.XtraEditors.LabelControl labelControl9;
         private DevExpress.XtraEditors.LabelControl labelControl8;
-        private System.Windows.Forms.NumericUpDown numThoiGian;
-        private System.Windows.Forms.NumericUpDown numSoCau;
         private DevExpress.XtraEditors.LabelControl labelControl7;
         private System.Windows.Forms.ComboBox cbbLanThi;
         private DevExpress.XtraEditors.LabelControl labelControl6;
@@ -942,7 +955,9 @@
         private DevExpress.XtraEditors.LabelControl labelMaKhoa;
         private DevExpress.XtraEditors.LabelControl labelTenKhoa;
         private DevExpress.XtraEditors.DateEdit dateNgayThi;
-        private System.Windows.Forms.BindingSource bdsDSGiaoVien;
-        private DSTableAdapters.SP_DS_GiaoVienTableAdapter tbDSGiaoVienADT;
+        private System.Windows.Forms.BindingSource bdsDSGK;
+        private DSTableAdapters.DSGVTableAdapter tbDSGVienADT;
+        private DevExpress.XtraEditors.SpinEdit numSoCau;
+        private DevExpress.XtraEditors.SpinEdit numThoiGian;
     }
 }

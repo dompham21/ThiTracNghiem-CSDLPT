@@ -36,15 +36,30 @@
     <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Charts.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.CodeParser.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v21.2.Export, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v21.2.UI, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v21.2.Core, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v21.2.Extensions, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,11 +87,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="FrmBangDiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBangDiem.Designer.cs">
+      <DependentUpon>FrmBangDiem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmBoDe.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmBoDe.Designer.cs">
       <DependentUpon>FrmBoDe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmChuanBiThiSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmChuanBiThiSV.Designer.cs">
+      <DependentUpon>FrmChuanBiThiSV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmFilterXemKQThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmFilterXemKQThi.Designer.cs">
+      <DependentUpon>FrmFilterXemKQThi.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmGiaoVien.cs">
       <SubType>Form</SubType>
@@ -102,11 +135,11 @@
     <Compile Include="FrmKQThi.Designer.cs">
       <DependentUpon>FrmKQThi.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmLop.cs">
+    <Compile Include="FrmMainSV.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmLop.Designer.cs">
-      <DependentUpon>FrmLop.cs</DependentUpon>
+    <Compile Include="FrmMainSV.Designer.cs">
+      <DependentUpon>FrmMainSV.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMonHoc.cs">
       <SubType>Form</SubType>
@@ -114,11 +147,11 @@
     <Compile Include="FrmMonHoc.Designer.cs">
       <DependentUpon>FrmMonHoc.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDangNhap.cs">
+    <Compile Include="FrmDangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDangNhap.Designer.cs">
-      <DependentUpon>frmDangNhap.cs</DependentUpon>
+    <Compile Include="FrmDangNhap.Designer.cs">
+      <DependentUpon>FrmDangNhap.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSinhVien.cs">
       <SubType>Form</SubType>
@@ -132,11 +165,23 @@
     <Compile Include="FrmChuanBiThiThu.Designer.cs">
       <DependentUpon>FrmChuanBiThiThu.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmThiThu.cs">
+    <Compile Include="FrmTaoTaiKhoan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmThiThu.Designer.cs">
-      <DependentUpon>FrmThiThu.cs</DependentUpon>
+    <Compile Include="FrmTaoTaiKhoan.Designer.cs">
+      <DependentUpon>FrmTaoTaiKhoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmThi.Designer.cs">
+      <DependentUpon>FrmThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmXemDSDangKy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmXemDSDangKy.Designer.cs">
+      <DependentUpon>FrmXemDSDangKy.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,14 +192,41 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Recovery.cs" />
+    <Compile Include="RptXemBangDiem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RptXemBangDiem.Designer.cs">
+      <DependentUpon>RptXemBangDiem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RptXemKQThi.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RptXemKQThi.Designer.cs">
+      <DependentUpon>RptXemKQThi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RptXemDSDangKy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RptXemDSDangKy.Designer.cs">
+      <DependentUpon>RptXemDSDangKy.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CauHoi.resx">
       <DependentUpon>CauHoi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBangDiem.resx">
+      <DependentUpon>FrmBangDiem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmBoDe.resx">
       <DependentUpon>FrmBoDe.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDangNhap.resx">
-      <DependentUpon>frmDangNhap.cs</DependentUpon>
+    <EmbeddedResource Include="FrmChuanBiThiSV.resx">
+      <DependentUpon>FrmChuanBiThiSV.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDangNhap.resx">
+      <DependentUpon>FrmDangNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmFilterXemKQThi.resx">
+      <DependentUpon>FrmFilterXemKQThi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmGiaoVien.resx">
       <DependentUpon>FrmGiaoVien.cs</DependentUpon>
@@ -168,11 +240,11 @@
     <EmbeddedResource Include="FrmKQThi.resx">
       <DependentUpon>FrmKQThi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmLop.resx">
-      <DependentUpon>FrmLop.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMainSV.resx">
+      <DependentUpon>FrmMainSV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMonHoc.resx">
       <DependentUpon>FrmMonHoc.cs</DependentUpon>
@@ -183,8 +255,14 @@
     <EmbeddedResource Include="FrmChuanBiThiThu.resx">
       <DependentUpon>FrmChuanBiThiThu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmThiThu.resx">
-      <DependentUpon>FrmThiThu.cs</DependentUpon>
+    <EmbeddedResource Include="FrmTaoTaiKhoan.resx">
+      <DependentUpon>FrmTaoTaiKhoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmThi.resx">
+      <DependentUpon>FrmThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmXemDSDangKy.resx">
+      <DependentUpon>FrmXemDSDangKy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -197,6 +275,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RptXemBangDiem.resx">
+      <DependentUpon>RptXemBangDiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RptXemKQThi.resx">
+      <DependentUpon>RptXemKQThi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RptXemDSDangKy.resx">
+      <DependentUpon>RptXemDSDangKy.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="DS.xsc">
       <DependentUpon>DS.xsd</DependentUpon>
     </None>

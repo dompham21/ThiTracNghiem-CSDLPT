@@ -18,11 +18,13 @@ namespace ThiTracNghiem
         private FrmMonHoc frmMonHoc = null;
         private FrmKhoa frmKhoa = null;
         private FrmGiaoVien frmGiaoVien = null;
-        private FrmLop frmLop = null;
         private FrmSinhVien frmSinhVien = null;
         private FrmGVDK frmGVDK = null;
         private FrmBoDe frmBoDe = null;
         private FrmChuanBiThiThu frmChuanBiThiThu = null;
+        private FrmBangDiem frmBangDiem = null;
+        private FrmXemDSDangKy frmXemDSDangKy = null;
+        private FrmTaoTaiKhoan frmTaoTaiKhoan = null;
         public FrmMain()
         {
             InitializeComponent();
@@ -47,18 +49,24 @@ namespace ThiTracNghiem
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            if (Program.mGroup == "Giangvien")
+            if (Program.mGroup == "GIANGVIEN")
             {
-                rbpgKhoa.Visible = rbpgLop.Visible = rbpgMonHoc.Visible = rbpgGVDK.Visible = rbpgDeThi.Visible = false;
-
+                rbpgKhoa.Visible = rbpgMonHoc.Visible = rbpBaoCao.Visible = rbpgGiaoVien.Visible =
+                  rbgpSinhVien.Visible = rbpgGVDK.Visible = rbpgTaoTaiKhoan.Visible = false;
+             
             }
-            else if (Program.mGroup == "Coso")
+            else if (Program.mGroup == "COSO")
             {
-
+                rbpgKhoa.Visible = rbpgMonHoc.Visible = rbpBaoCao.Visible =
+                  rbgpSinhVien.Visible = rbpgGVDK.Visible = rbpgTaoTaiKhoan.Visible = rbpgGiaoVien.Visible = 
+                   rbpgThiThu.Visible = rbpgDeThi.Visible =  true;
             }
-            else
+            else if(Program.mGroup == "TRUONG")
             {
-
+                rbpgKhoa.Visible = rbpgMonHoc.Visible = rbpBaoCao.Visible =
+                  rbgpSinhVien.Visible = rbpgGVDK.Visible = rbpgTaoTaiKhoan.Visible 
+                  = rbpgGiaoVien.Visible = rbpgDeThi.Visible = true;
+                rbpgThiThu.Visible = false;
             }
         }
 
@@ -107,20 +115,6 @@ namespace ThiTracNghiem
             else form.Activate();
         }
 
-        private void btnLop_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            form = this.CheckExists(typeof(FrmLop));
-            if (form == null)
-            {
-
-                IsMdiContainer = true;
-                frmLop = new FrmLop();
-                frmLop.MdiParent = this;
-
-                frmLop.Show();
-            }
-            else form.Activate();
-        }
 
         private void btnSinhVien_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -180,6 +174,74 @@ namespace ThiTracNghiem
                 frmChuanBiThiThu.Show();
             }
             else form.Activate();
+        }
+
+        private void btnBangDiem_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmBangDiem));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmBangDiem = new FrmBangDiem();
+                frmBangDiem.MdiParent = this;
+
+                frmBangDiem.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnDSDangKyThi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmXemDSDangKy));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmXemDSDangKy = new FrmXemDSDangKy();
+                frmXemDSDangKy.MdiParent = this;
+
+                frmXemDSDangKy.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnTaoTaiKhoan_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            form = this.CheckExists(typeof(FrmTaoTaiKhoan));
+            if (form == null)
+            {
+
+                IsMdiContainer = true;
+                frmTaoTaiKhoan = new FrmTaoTaiKhoan();
+                frmTaoTaiKhoan.MdiParent = this;
+
+                frmTaoTaiKhoan.Show();
+            }
+            else form.Activate();
+        }
+
+        private void btnDangXuat_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "", MessageBoxButtons.OKCancel);
+            if (dialogResult == DialogResult.OK)
+            {
+                Program.username = "";
+                Program.mlogin = "";
+                Program.password = "";
+                Program.mHoten = "";
+                Program.mGroup = "";
+
+                foreach (Form frm in this.MdiChildren)
+                {
+                    if (frm.ShowInTaskbar)
+                        frm.Close();
+                }
+                Program.frmChinh.Hide();
+                FrmDangNhap frmDangNhap = new FrmDangNhap();
+                frmDangNhap.Activate();
+                frmDangNhap.ShowDialog();
+            }
         }
     }
 }

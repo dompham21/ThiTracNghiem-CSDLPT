@@ -13,11 +13,11 @@ using DevExpress.XtraEditors;
 
 namespace ThiTracNghiem
 {
-    public partial class frmDangNhap : Form
+    public partial class FrmDangNhap : Form
     {
         private SqlConnection conn_publisher = new SqlConnection();
 
-        public frmDangNhap()
+        public FrmDangNhap()
         {
             InitializeComponent();
         }
@@ -95,6 +95,7 @@ namespace ThiTracNghiem
             }
 
             if (checkBoxSV.Checked) {
+
                 Program.mlogin = Program.svLogin;
                 Program.password = Program.svPassword;
             }
@@ -122,46 +123,95 @@ namespace ThiTracNghiem
             }
             else
             {
-                strLenh = "EXEC SP_Lay_Thong_Tin_SV_Tu_Login  '" + Program.mSV + "' , " + "'" + tbMatKhau.Text.Trim() + "'";
-            }
+                String sql = "EXEC SP_GET_PASSWORD_FROM_MASV N'" + Program.mSV + "'";
 
-            //Thực hiện sp
-            Program.myReader = Program.ExecSqlDataReader(strLenh);
-
-            if (Program.myReader == null) return;
-            Program.myReader.Read();
-
-            if (Convert.IsDBNull(Program.myReader.GetString(1)))
-            {
-                XtraMessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu\n Bạn xem lại username, password", "", MessageBoxButtons.OK);
-                return;
-            }
-            else
-            {
-                Program.username = Program.myReader.GetString(0);
-                Program.mHoten = Program.myReader.GetString(1);
-                Program.mGroup = Program.myReader.GetString(2);
-
-                Program.myReader.Close();
-                Program.conn.Close();
-
-                if (checkBoxSV.Checked == true)
+                try
                 {
-                    this.Hide();
-                    
-                    this.Close();
+                    Program.myReader = Program.ExecSqlDataReader(sql);
+                    if (Program.myReader == null) return;
+                    Program.myReader.Read();
+
+                    String hashPass = Program.myReader.GetString(0);
+                    if(hashPass.Equals(""))
+                    {
+                        XtraMessageBox.Show("Mã sinh viên hoặc mật khẩu sai, vui lòng xem lại!", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                    bool verified = BCrypt.Net.BCrypt.Verify(tbMatKhau.Text.Trim(), hashPass);
+                    if(verified)
+                    {
+                        strLenh = "EXEC SP_Lay_Thong_Tin_SV_Tu_Login  '" + Program.mSV + "'";
+
+                    }
+                    else
+                    {
+                        XtraMessageBox.Show("Mã sinh viên hoặc mật khẩu sai, vui lòng xem lại!", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show("Mã sinh viên hoặc mật khẩu sai, vui lòng xem lại!", "", MessageBoxButtons.OK);
+                    return;
+                }
+                finally
+                {
+                    Program.myReader.Close();
+                }
+            }
+            if (strLenh.Equals("")) return;
+            try
+            {
+                //Thực hiện sp
+                Program.myReader = Program.ExecSqlDataReader(strLenh);
+                if (Program.myReader == null) return;
+                Program.myReader.Read();
+
+                if (Convert.IsDBNull(Program.myReader.GetString(1)))
+                {
+                    XtraMessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu\n Bạn xem lại username, password", "", MessageBoxButtons.OK);
+                    return;
                 }
                 else
                 {
-                    this.Hide();
-                    Program.frmChinh = new FrmMain();
-                    Program.frmChinh.MaGVSV.Text = "Mã số: " + Program.username;
-                    Program.frmChinh.HoTen.Text = "Họ tên: " + Program.mHoten;
-                    Program.frmChinh.Nhom.Text = "Nhóm: " + Program.mGroup;
-                    Program.frmChinh.ShowDialog();
-                    this.Close();
+                    Program.username = Program.myReader.GetString(0);
+                    Program.mHoten = Program.myReader.GetString(1);
+                    Program.mGroup = Program.myReader.GetString(2);
+
+                    Program.myReader.Close();
+                    Program.conn.Close();
+
+                    if (checkBoxSV.Checked == true)
+                    {
+                        this.Hide();
+                        Program.frmMainSV = new FrmMainSV();
+                        Program.frmMainSV.MaGVSV.Text = "Mã số: " + Program.username;
+                        Program.frmMainSV.HoTen.Text = "Họ tên: " + Program.mHoten;
+                        Program.frmMainSV.Nhom.Text = "Nhóm: " + Program.mGroup;
+                        Program.frmMainSV.ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Hide();
+                        Program.frmChinh = new FrmMain();
+                        Program.frmChinh.MaGVSV.Text = "Mã số: " + Program.username;
+                        Program.frmChinh.HoTen.Text = "Họ tên: " + Program.mHoten;
+                        Program.frmChinh.Nhom.Text = "Nhóm: " + Program.mGroup;
+                        Program.frmChinh.ShowDialog();
+                        this.Close();
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                XtraMessageBox.Show("Lỗi " + ex.Message);
+                Program.myReader.Close();
+                Program.conn.Close();
+                this.Close();
+            }
+
+
 
         }
 

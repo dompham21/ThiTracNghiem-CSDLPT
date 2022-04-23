@@ -71,7 +71,7 @@ namespace ThiTracNghiem
             arr[0] = "Câu " + cauSo;
             arr[1] = daChon;
             ListViewItem baiThi = new ListViewItem(arr);
-            Program.frmThiThu.listViewDAChon.Items[CauSo - 1] = baiThi;
+            Program.frmThi.listViewDAChon.Items[CauSo - 1] = baiThi;
         }
     }
 }

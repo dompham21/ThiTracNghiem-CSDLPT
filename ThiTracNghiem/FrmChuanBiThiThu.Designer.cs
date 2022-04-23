@@ -54,17 +54,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnThoat = new System.Windows.Forms.Button();
             this.btnThi = new System.Windows.Forms.Button();
-            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.cbbCoSo = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsGVDK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcGVDK)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
-            this.panelControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // bar2
@@ -172,11 +167,11 @@
             // 
             this.gcGVDK.DataSource = this.bdsGVDK;
             this.gcGVDK.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gcGVDK.Location = new System.Drawing.Point(0, 77);
+            this.gcGVDK.Location = new System.Drawing.Point(0, 0);
             this.gcGVDK.MainView = this.gridView1;
             this.gcGVDK.MenuManager = this.barManager2;
             this.gcGVDK.Name = "gcGVDK";
-            this.gcGVDK.Size = new System.Drawing.Size(1284, 440);
+            this.gcGVDK.Size = new System.Drawing.Size(1284, 517);
             this.gcGVDK.TabIndex = 5;
             this.gcGVDK.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -310,40 +305,6 @@
             this.btnThi.UseVisualStyleBackColor = true;
             this.btnThi.Click += new System.EventHandler(this.btnThi_Click);
             // 
-            // panelControl1
-            // 
-            this.panelControl1.Controls.Add(this.cbbCoSo);
-            this.panelControl1.Controls.Add(this.label1);
-            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelControl1.Location = new System.Drawing.Point(0, 0);
-            this.panelControl1.Margin = new System.Windows.Forms.Padding(1);
-            this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1284, 77);
-            this.panelControl1.TabIndex = 38;
-            // 
-            // cbbCoSo
-            // 
-            this.cbbCoSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbCoSo.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbbCoSo.FormattingEnabled = true;
-            this.cbbCoSo.Location = new System.Drawing.Point(320, 23);
-            this.cbbCoSo.Margin = new System.Windows.Forms.Padding(1);
-            this.cbbCoSo.Name = "cbbCoSo";
-            this.cbbCoSo.Size = new System.Drawing.Size(375, 23);
-            this.cbbCoSo.TabIndex = 12;
-            this.cbbCoSo.SelectedIndexChanged += new System.EventHandler(this.cbbCoSo_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(253, 25);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 17);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Cơ sở";
-            // 
             // FrmChuanBiThiThu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
@@ -351,7 +312,6 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1284, 781);
             this.Controls.Add(this.gcGVDK);
-            this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.barDockControl3);
             this.Controls.Add(this.barDockControl4);
@@ -369,9 +329,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gcGVDK)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
-            this.panelControl1.ResumeLayout(false);
-            this.panelControl1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,9 +359,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colLAN;
         private DevExpress.XtraGrid.Columns.GridColumn colSOCAUTHI;
         private DevExpress.XtraGrid.Columns.GridColumn colTHOIGIAN;
-        private DevExpress.XtraEditors.PanelControl panelControl1;
-        private System.Windows.Forms.ComboBox cbbCoSo;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.Button btnThi;
     }

@@ -24,16 +24,10 @@ namespace ThiTracNghiem
             InitializeComponent();
         }
 
-        private void gIAOVIEN_DANGKYBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.bdsGVDK.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DS);
-
-        }
-
+   
         private void FrmGVDK_Load(object sender, EventArgs e)
         {
+
             cbbCoSo.DataSource = Program.bds_dspm.DataSource;
             cbbCoSo.DisplayMember = "TENCS";
             cbbCoSo.ValueMember = "TENSERVER";
@@ -42,8 +36,8 @@ namespace ThiTracNghiem
 
             DS.EnforceConstraints = false; //Tat kiem tra ranh buoc (khoa ngoai)
 
-            this.tbDSGiaoVienADT.Connection.ConnectionString = Program.connstr;
-            this.tbDSGiaoVienADT.Fill(this.DS.SP_DS_GiaoVien);
+            this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+            this.tbDSGVienADT.Fill(this.DS.DSGV);
             this.tbLopADT.Connection.ConnectionString = Program.connstr;
             this.tbLopADT.Fill(this.DS.LOP);
             this.tbMonHocADT.Connection.ConnectionString = Program.connstr;
@@ -62,7 +56,20 @@ namespace ThiTracNghiem
                 cbbLanThi.Text = ((DataRowView)this.bdsGVDK.Current).Row["LAN"].ToString();
                 cbbTrinhDo.Text = ((DataRowView)this.bdsGVDK.Current).Row["TRINHDO"].ToString();
             }
+            if (Program.mGroup == "COSO")
+            {
+                cbbCoSo.Enabled = false;
 
+                btnThem.Visibility = btnGhi.Visibility = btnSua.Visibility = btnXoa.Visibility = btnHuy.Visibility 
+                    = btnUndo.Visibility = btnRedo.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            }
+            //Truong thì login đó có thể đăng nhập vào bất kỳ phân mảnh  nào để xem dữ liệu 
+            else if (Program.mGroup == "TRUONG")
+            {
+                cbbCoSo.Enabled = true;
+                btnThem.Visibility = btnGhi.Visibility = btnSua.Visibility = btnXoa.Visibility = btnHuy.Visibility
+                    = btnUndo.Visibility = btnRedo.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            }
 
             checkStateUndoRedo();
 
@@ -115,6 +122,8 @@ namespace ThiTracNghiem
             {
                 Program.mlogin = Program.remoteLogin;
                 Program.password = Program.remotePassword;
+                Program.mCoSo = cbbCoSo.SelectedIndex;
+
             }
             else
             {
@@ -144,8 +153,6 @@ namespace ThiTracNghiem
         {
             try
             {
-                
-
                 gcGVDK.Enabled = false;
                 btnGhi.Enabled = btnHuy.Enabled = true;
                 cbbTenGV.Enabled = cbbTenLop.Enabled = cbbTenMon.Enabled = cbbTrinhDo.Enabled 
@@ -155,8 +162,8 @@ namespace ThiTracNghiem
                 isThem = true;
                 cbbTrinhDo.SelectedIndex = cbbLanThi.SelectedIndex = -1;
                 btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
-                numSoCau.Value = 10;
                 numThoiGian.Value = 15;
+                numSoCau.Value = 10;
             }
             catch (Exception ex)
             {
@@ -197,43 +204,60 @@ namespace ThiTracNghiem
                 String sql = "EXEC SP_KT_Lop_Da_Thi N'" + txtMaLop.Text.Trim()
                    + "', N'" + txtMaMon.Text.Trim()
                    + "',  " + cbbLanThi.Text.Trim();
+                try
+                {
+                    Program.myReader = Program.ExecSqlDataReader(sql);
+                    if (Program.myReader == null) return;
+                    Program.myReader.Read();
 
-                int kq = Program.ExecSqlNonQuery(sql);
-                if (kq == 1)
-                {
-                    XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
-                    return;
-                }
-                else
-                {
-                    if (MessageBox.Show("Bạn có chắc chắn muốn xóa giảng viên đăng ký của môn "
-                    + ((DataRowView)this.bdsGVDK.Current).Row["MAMH"].ToString().Trim() + " lớp "
-                     + ((DataRowView)this.bdsGVDK.Current).Row["MALOP"].ToString().Trim() + " lần "
-                     + ((DataRowView)this.bdsGVDK.Current).Row["LAN"].ToString().Trim()
-                    + "?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    String kq = Program.myReader.GetString(0);
+
+                    Program.myReader.Close();
+
+                    if (kq.Equals("1"))
                     {
-                        try
+                        XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Bạn có chắc chắn muốn xóa giảng viên đăng ký của môn "
+                            + ((DataRowView)this.bdsGVDK.Current).Row["MAMH"].ToString().Trim() + " lớp "
+                             + ((DataRowView)this.bdsGVDK.Current).Row["MALOP"].ToString().Trim() + " lần "
+                             + ((DataRowView)this.bdsGVDK.Current).Row["LAN"].ToString().Trim()
+                            + "?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
-                            stackUndo.Push(new Recovery("N'" + txtMaGV.Text.Trim() + "', N'" + txtMaLop.Text.Trim()
-                                                    + "', N'" + txtMaMon.Text.Trim() + "', N'" + cbbTrinhDo.Text.Trim() + "', " + cbbLanThi.Text.Trim()
-                                                    + ", '" + dateNgayThi.DateTime + "', " + numSoCau.Value + ", " + numThoiGian.Value, "DELETE",""));
-                            bdsGVDK.RemoveCurrent();
-                            //đẩy dữ liệu về adapter
-                            this.tbGVDKyADT.Update(this.DS.GIAOVIEN_DANGKY);
-                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                            checkStateUndoRedo();
+                            try
+                            {
+                                stackUndo.Push(new Recovery("N'" + txtMaGV.Text.Trim() + "', N'" + txtMaLop.Text.Trim()
+                                                        + "', N'" + txtMaMon.Text.Trim() + "', N'" + cbbTrinhDo.Text.Trim() + "', " + cbbLanThi.Text.Trim()
+                                                        + ", '" + dateNgayThi.DateTime + "', " + numSoCau.Value + ", " + numThoiGian.Value, "DELETE", ""));
+                                bdsGVDK.RemoveCurrent();
+                                //đẩy dữ liệu về adapter
+                                this.tbGVDKyADT.Update(this.DS.GIAOVIEN_DANGKY);
+                                this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                                this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                                checkStateUndoRedo();
+                                XtraMessageBox.Show("Xóa giảng viên đăng ký thi thành công!", "", MessageBoxButtons.OK);
 
-                        }
-                        catch (Exception ex)
-                        {
-                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                                this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
 
-                            MessageBox.Show("Lỗi xóa giảng viên đăng ký " + ex.Message, "", MessageBoxButtons.OK);
+                                MessageBox.Show("Lỗi xóa giảng viên đăng ký " + ex.Message, "", MessageBoxButtons.OK);
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                
+                
 
             }
         }
@@ -256,35 +280,46 @@ namespace ThiTracNghiem
         {
             bool isValid = ValidateInput(); 
             if (!isValid) return;
-
             btnHuy.Enabled = btnGhi.Enabled = false;
             if (isThem)
             {
-                String sql = "EXEC SP_KT_GVDK N'" + txtMaMon.Text.Trim() + "', N'" + txtMaLop.Text.Trim() + "', " + cbbLanThi.SelectedItem + "";
-                if (Program.ExecSqlNonQuery(sql) == 1)
-                {
-                    btnHuy.Enabled = btnGhi.Enabled = true;
-                    return;
-                }
-                else
-                {
+                String sql = "EXEC SP_KT_GVDK N'" + txtMaMon.Text.Trim() + "', N'" + txtMaLop.Text.Trim() + "', " + cbbLanThi.Text.Trim() + "";
 
 
-                    stackUndo.Push(new Recovery("N'" + txtMaGV.Text.Trim() + "', N'" + txtMaLop.Text.Trim()
+                try
+                {
+                    Program.myReader = Program.ExecSqlDataReader(sql);
+                    if (Program.myReader == null) return;
+                    Program.myReader.Read();
+
+                    String kq = Program.myReader.GetString(0);
+
+                    Program.myReader.Close();
+
+                    if (kq.Equals("1"))
+                    {
+                        XtraMessageBox.Show("Đã tồn tại đăng ký thi cho môn học, lớp học và lần thi này!", "", MessageBoxButtons.OK);
+                        btnHuy.Enabled = btnGhi.Enabled = true;
+                        return;
+                    }
+                    else
+                    {
+                        stackUndo.Push(new Recovery("N'" + txtMaGV.Text.Trim() + "', N'" + txtMaLop.Text.Trim()
                                                    + "', N'" + txtMaMon.Text.Trim() + "', N'" + cbbTrinhDo.Text.Trim() + "', " + cbbLanThi.Text.Trim()
-                                                   + ", '" + dateNgayThi.DateTime + "', " + numSoCau.Value + ", " + numThoiGian.Value, "INSERT",""));
-
-                    WriteToDB();
-
-
-                    isThem = false;
-
-
-                    checkStateUndoRedo();
-                    return;
-
-
+                                                   + ", '" + dateNgayThi.DateTime + "', " + numSoCau.Value + ", " + numThoiGian.Value, "INSERT", ""));
+                        WriteToDB();
+                        isThem = false;
+                        checkStateUndoRedo();
+                        XtraMessageBox.Show("Thêm giảng viên đăng ký thành công!", "", MessageBoxButtons.OK);
+                        return;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+               
             }
             else if(isSua)
             {
@@ -295,6 +330,7 @@ namespace ThiTracNghiem
 
                 isSua = false;
                 checkStateUndoRedo();
+                XtraMessageBox.Show("Sửa giảng viên đăng ký thành công!", "", MessageBoxButtons.OK);
                 return;
             }
             
@@ -310,93 +346,140 @@ namespace ThiTracNghiem
                 {
                     //Neu them thi xoa no di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_GVDK " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
+
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa giáo viên đăng ký", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Xoa thanh cong
+                    catch (Exception ex)
                     {
-                        stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
-
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa giáo viên đăng ký", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("UPDATE"))
                 {
                     String sql = "EXEC SP_Phuc_Hoi_Sua_GVDK " + undo.SqlBeforeUpdateString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("0")) //Sua thanh cong
+                    try
                     {
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                        isSua = isThem = false;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            isSua = isThem = false;
 
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("DELETE"))
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_GVDK " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Đã tồn tại đăng ký thi lần thi cho môn học và lớp này, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Đã tồn tại đăng ký thi lần thi cho môn học và lớp này, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
+
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại giảng viên đăng ký", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Them thanh cong
+                    catch (Exception ex)
                     {
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
-
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại giảng viên đăng ký", "", MessageBoxButtons.OK);
-
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else return;
 
@@ -413,93 +496,141 @@ namespace ThiTracNghiem
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_GVDK " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Đã tồn tại đăng ký thi lần thi cho môn học và lớp này, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Đã tồn tại đăng ký thi lần thi cho môn học và lớp này, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Them thanh cong
+                    catch (Exception ex)
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
-
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (redo.Type.Equals("UPDATE"))
                 {
                     String sql = "EXEC SP_Phuc_Hoi_Sua_GVDK " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    
-                    if (kq.Equals("0")) //Sua thanh cong
+                    try
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                        isSua = isThem = false;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+                        String kq = Program.myReader.GetString(0);
 
+                        if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            isSua = isThem = false;
+
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại giáo viên đăng ký", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (redo.Type.Equals("DELETE"))
                 {
                     //Xoa di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_GVDK " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Thông tin của giảng viên đăng ký này đã tồn tại trong bảng bảng điểm, Không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+
+                            this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
+                            this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa giáo viên đăng ký", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+
                     }
-                    else if (kq.Equals("0")) // Xoa thanh cong
+                    catch (Exception ex)
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
-
-                        this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
-                        this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa giáo viên đăng ký", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else return;
             }
@@ -648,7 +779,7 @@ namespace ThiTracNghiem
 
             if(DateTime.Compare(DateTime.Today, dateNgayThi.DateTime) > 0)
             {
-                XtraMessageBox.Show("Thời gian thi không được bé hơn ngày hiện tại ", "", MessageBoxButtons.OK);
+                XtraMessageBox.Show("Ngày thi không được bé hơn ngày hiện tại ", "", MessageBoxButtons.OK);
                 dateNgayThi.Focus();
                 return false;
             }
@@ -668,8 +799,80 @@ namespace ThiTracNghiem
             }
 
             //------ktra thông tin đăng ký------start(đã lập hay chưa, nếu là dky lần 2 thì ktra thêm đã thi lần 1 chưa, ngày lần 2 có lớn hơn ngày lần 1 ko) 
-            //------Lượt thi của Môn thi này cho lớp đó đã được tổ chức thi hai lần. Và không thể tổ chức thêm
+            if (int.Parse(cbbLanThi.Text.Trim()) == 2)
+            {
+                String sqlKtLan = "EXEC SP_KT_GVDK N'" + txtMaMon.Text.Trim() + "', N'" + txtMaLop.Text.Trim() + "', " + 1 + "";
+
+                try
+                {
+                    Program.myReader = Program.ExecSqlDataReader(sqlKtLan);
+                    if (Program.myReader == null) return false;
+                    Program.myReader.Read();
+
+                    String kq = Program.myReader.GetString(0);
+
+                    Program.myReader.Close();
+
+                    if (kq.Equals("0"))
+                    {
+                        XtraMessageBox.Show("Hiện tại chưa đăng ký tổ chức thi lần 1 nên không thể tổ chức đăng ký thi lần 2", "", MessageBoxButtons.OK);
+                        cbbLanThi.Focus();
+                        return false;
+                    }
+                 }
+                catch(Exception ex)
+                {
+                    Program.myReader.Close();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+                string ngaythi = "SELECT ngaythi from GIAoVIEN_DANGKY Where MALOP='" + txtMaLop.Text.Trim() + "'AND MAMH='" + txtMaMon.Text.Trim() + "'AND LAN=" + 1 + "";
+                try
+                {
+                    Program.myReader = Program.ExecSqlDataReader(ngaythi);
+                    if (Program.myReader == null) return false;
+                    Program.myReader.Read();
+
+                    DateTime kq = Program.myReader.GetDateTime(0);
+
+                    Program.myReader.Close();
+
+                    if (DateTime.Compare(kq, dateNgayThi.DateTime) > 0)
+                    {
+                        XtraMessageBox.Show("Ngày thi đăng ký thi lần 1 không được lớn hơn ngày thi đăng ký thi lần 2 ", "", MessageBoxButtons.OK);
+                        dateNgayThi.Focus();
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.myReader.Close();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+
             //------Không đủ câu hỏi để tổ chức thi.
+            String sql = "exec SP_GET_CauHoi N'"
+               + txtMaMon.Text.Trim() + "',N'"
+               + cbbTrinhDo.Text.Trim() + "', " + numSoCau.Value.ToString();
+            try
+            {
+                DataTable dt = Program.ExecSqlDataTable(sql);
+                if (dt.Rows.Count == 0)
+                {
+                    numSoCau.Focus();
+                    XtraMessageBox.Show("Không đủ câu hỏi để tổ chức thi, vui lòng nhập lại!", "", MessageBoxButtons.OK);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+
             return true;
         }
         private void WriteToDB()

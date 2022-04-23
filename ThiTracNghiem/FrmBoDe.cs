@@ -24,27 +24,35 @@ namespace ThiTracNghiem
             InitializeComponent();
         }
 
-        private void bODEBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.bdsBoDe.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DS);
-
-        }
+       
 
         private void FrmBoDe_Load(object sender, EventArgs e)
         {
             
+
             DS.EnforceConstraints = false;
 
             this.tbCTBThiADT.Connection.ConnectionString = Program.connstr;
             this.tbCTBThiADT.Fill(this.DS.CT_BAITHI);
             this.tbMonHocADT.Connection.ConnectionString = Program.connstr;
             this.tbMonHocADT.Fill(this.DS.MONHOC);
-            this.tbGVienADT.Connection.ConnectionString = Program.connstr;
-            this.tbGVienADT.Fill(this.DS.GIAOVIEN);
-            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-            this.tbBoDeADT.Fill(this.DS.BODE);
+            
+            
+
+            if (Program.mGroup.Equals("GIANGVIEN"))
+            {
+                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+            }
+            else
+            {
+                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                this.tbBoDeADT.Fill(this.DS.BODE);
+                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                this.tbDSGVienADT.Fill(this.DS.DSGV);
+            }
 
             cbbTrinhDo.Items.Add("A");
             cbbTrinhDo.Items.Add("B");
@@ -57,6 +65,18 @@ namespace ThiTracNghiem
             {
                 cbbDapAn.Text = ((DataRowView)this.bdsBoDe.Current).Row["DAP_AN"].ToString();
                 cbbTrinhDo.Text = ((DataRowView)this.bdsBoDe.Current).Row["TRINHDO"].ToString();
+            }
+
+            if (Program.mGroup == "COSO")
+            {
+                btnThem.Visibility = btnGhi.Visibility = btnSua.Visibility = btnXoa.Visibility = btnHuy.Visibility
+                    = btnUndo.Visibility = btnRedo.Visibility = DevExpress.XtraBars.BarItemVisibility.Always;
+            }
+            //Truong thì login đó có thể đăng nhập vào bất kỳ phân mảnh  nào để xem dữ liệu 
+            else if (Program.mGroup == "TRUONG")
+            {
+                btnThem.Visibility = btnGhi.Visibility = btnSua.Visibility = btnXoa.Visibility = btnHuy.Visibility
+                    = btnUndo.Visibility = btnRedo.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             }
 
             checkStateUndoRedo();
@@ -99,17 +119,30 @@ namespace ThiTracNghiem
         {
             try
             {
+               
+
                 gcBoDe.Enabled = false;
                 btnGhi.Enabled = btnHuy.Enabled = true;
 
+                
                 bdsBoDe.AddNew();
                 isThem = true;
 
-                txtMaCH.Enabled = cbbTenMon.Enabled = cbbTenGV.Enabled = cbbDapAn.Enabled =
+                txtMaCH.Enabled = cbbTenMon.Enabled = cbbDapAn.Enabled =
                     cbbTrinhDo.Enabled = rtxtA.Enabled = rtxtB.Enabled = rtxtC.Enabled = rtxtD.Enabled = rtxtNoiDung.Enabled = true;
                 txtMaCH.Focus();
                 btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
                 cbbDapAn.SelectedIndex = cbbTrinhDo.SelectedIndex = -1;
+                if (Program.mGroup.Equals("GIANGVIEN"))
+                {
+                    cbbTenGV.Enabled = false;
+                    cbbTenGV.SelectedIndex = 0;
+
+                }
+                else
+                {
+                    cbbTenGV.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -125,7 +158,16 @@ namespace ThiTracNghiem
             }
             else
             {
-                cbbTenMon.Enabled = cbbTenGV.Enabled = cbbDapAn.Enabled = cbbTrinhDo.Enabled 
+                if (Program.mGroup.Equals("GIANGVIEN"))
+                {
+                    cbbTenGV.SelectedIndex = 0;
+                }
+                else
+                {
+                    cbbTenGV.Enabled = true;
+                }
+
+                cbbTenMon.Enabled = cbbDapAn.Enabled = cbbTrinhDo.Enabled 
                     = rtxtA.Enabled = rtxtB.Enabled = rtxtC.Enabled = rtxtD.Enabled = rtxtNoiDung.Enabled = true;
                 btnGhi.Enabled = btnHuy.Enabled = true;
                 gcBoDe.Enabled = true;
@@ -168,14 +210,41 @@ namespace ThiTracNghiem
                         bdsBoDe.RemoveCurrent();
                         this.tbBoDeADT.Update(this.DS.BODE);
 
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
+                        if (Program.mGroup.Equals("GIANGVIEN"))
+                        {
+                            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                            this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                            this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                            this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                        }
+                        else
+                        {
+                            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                            this.tbBoDeADT.Fill(this.DS.BODE);
+                            this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                            this.tbDSGVienADT.Fill(this.DS.DSGV);
+                        }
                         checkStateUndoRedo();
+
+                        XtraMessageBox.Show("Xóa đề thi thành công!", "", MessageBoxButtons.OK);
                     }
                     catch (Exception ex)
                     {
                         XtraMessageBox.Show("Lỗi xóa bộ đề " + ex.Message, "", MessageBoxButtons.OK);
-                        this.tbBoDeADT.Fill(this.DS.BODE);
+                        if (Program.mGroup.Equals("GIANGVIEN"))
+                        {
+                            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                            this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                            this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                            this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                        }
+                        else
+                        {
+                            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                            this.tbBoDeADT.Fill(this.DS.BODE);
+                            this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                            this.tbDSGVienADT.Fill(this.DS.DSGV);
+                        }
                         bdsBoDe.Position = bdsBoDe.Find("CAUHOI", maCH);
                         return;
                     }
@@ -192,8 +261,20 @@ namespace ThiTracNghiem
             txtMaCH.Enabled = cbbTenMon.Enabled = cbbTenGV.Enabled = cbbDapAn.Enabled =
                     cbbTrinhDo.Enabled = rtxtA.Enabled = rtxtB.Enabled = rtxtC.Enabled = rtxtD.Enabled = rtxtNoiDung.Enabled = false;
             btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = true;
-            this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-            this.tbBoDeADT.Fill(this.DS.BODE);
+            if (Program.mGroup.Equals("GIANGVIEN"))
+            {
+                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+            }
+            else
+            {
+                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                this.tbBoDeADT.Fill(this.DS.BODE);
+                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                this.tbDSGVienADT.Fill(this.DS.DSGV);
+            }
             gcBoDe.Enabled = true;
         }
 
@@ -208,36 +289,51 @@ namespace ThiTracNghiem
                 //Kiem tra ma va ten mon hoc ton tai
                 String sql = "EXEC SP_KT_Bo_De_Ton_Tai " + txtMaCH.Text.Trim();
 
-                int kq = Program.ExecSqlNonQuery(sql);
-               
-              
-
-                if (kq == 1)
+                try
                 {
-                    txtMaCH.Focus();
-                    btnHuy.Enabled = btnGhi.Enabled = true;
+                    int kq = Program.ExecSqlNonQuery(sql);
+
+
+
+                    if (kq == 1)
+                    {
+                        txtMaCH.Focus();
+                        btnHuy.Enabled = btnGhi.Enabled = true;
+                        return;
+                    }
+                    else
+                    {
+                        string maCH = txtMaCH.Text.Trim();
+
+                        stackUndo.Push(new Recovery(maCH + ", N'" + txtMaMon.Text.Trim() + "', N'" + txtMaGV.Text.Trim() + "',N'" +
+                        cbbTrinhDo.Text.Trim() + "', N'" + cbbDapAn.Text.Trim() + "', N'" + rtxtNoiDung.Text.Trim() + "', N'" +
+                        rtxtA.Text.Trim() + "', N'" + rtxtB.Text.Trim() + "', N'" + rtxtC.Text.Trim() + "', N'" + rtxtD.Text.Trim() + "'", "INSERT", maCH));
+
+                        WriteToDB();
+
+                        bdsBoDe.Position = bdsBoDe.Find("CAUHOI", maCH);
+
+                        isThem = false;
+
+
+                        checkStateUndoRedo();
+                        XtraMessageBox.Show("Thêm đề thi thành công", "", MessageBoxButtons.OK);
+
+                        return;
+
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show("Thêm đề thi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                     return;
                 }
-                else
+                finally
                 {
-                    string maCH = txtMaCH.Text.Trim();
-
-                    stackUndo.Push(new Recovery(maCH + ", N'" + txtMaMon.Text.Trim() + "', N'" + txtMaGV.Text.Trim() + "',N'" +
-                    cbbTrinhDo.Text.Trim() + "', N'" + cbbDapAn.Text.Trim() + "', N'" + rtxtNoiDung.Text.Trim() + "', N'" +
-                    rtxtA.Text.Trim() + "', N'" + rtxtB.Text.Trim() + "', N'" + rtxtC.Text.Trim() + "', N'" + rtxtD.Text.Trim() + "'", "INSERT", maCH));
-
-                    WriteToDB();
-
-                    bdsBoDe.Position = bdsBoDe.Find("CAUHOI", maCH);
-
-                    isThem = false;
-
-
-                    checkStateUndoRedo();
-                    return;
-
-
+                    Program.conn.Close(); 
                 }
+                
             }
             else if (isSua)
             {
@@ -251,7 +347,7 @@ namespace ThiTracNghiem
                 WriteToDB();
                 isSua = false;
                 bdsBoDe.Position = bdsBoDe.Find("CAUHOI", maCH);
-
+                XtraMessageBox.Show("Sửa đề thi thành công!", "", MessageBoxButtons.OK);
                 checkStateUndoRedo();
                 return;
                 
@@ -270,94 +366,178 @@ namespace ThiTracNghiem
                 {
                     //Neu them thi xoa no di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_Bo_De " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Bộ đề đã có trong chi tiết bài thi, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Bộ đề đã có trong chi tiết bài thi, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
+
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa bộ đề", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Xoa thanh cong
+                    catch (Exception ex)
                     {
-                        stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
-
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa bộ đề", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("UPDATE"))
                 {
                     String sql = "EXEC SP_Phuc_Hoi_Sua_Bo_De " + undo.SqlBeforeUpdateString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("0")) //Sua thanh cong
+                    try
                     {
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-                        isSua = isThem = false;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                        bdsBoDe.Position = bdsBoDe.Find("CAUHOI", undo.MaPosition);
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại bộ đề", "", MessageBoxButtons.OK);
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+                            isSua = isThem = false;
 
+                            bdsBoDe.Position = bdsBoDe.Find("CAUHOI", undo.MaPosition);
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại bộ đề", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("DELETE"))
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_Bo_De " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Mã câu hỏi đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Mã câu hỏi đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
+
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+                            bdsBoDe.Position = bdsBoDe.Find("CAUHOI", undo.MaPosition);
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại bộ đề", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Them thanh cong
+                    catch (Exception ex)
                     {
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
-
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-                        bdsBoDe.Position = bdsBoDe.Find("CAUHOI", undo.MaPosition);
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại bộ đề", "", MessageBoxButtons.OK);
-
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
+
                 }
                 else return;
 
@@ -373,95 +553,180 @@ namespace ThiTracNghiem
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_Bo_De " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Mã bộ đề đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Mã bộ đề đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+
+                            bdsBoDe.Position = bdsBoDe.Find("CAUHOI", redo.MaPosition);
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại bộ đề", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Them thanh cong
+                    catch (Exception ex)
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
-
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-
-                        bdsBoDe.Position = bdsBoDe.Find("CAUHOI", redo.MaPosition);
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại bộ đề", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
+
                 }
                 else if (redo.Type.Equals("UPDATE"))
                 {
                     String sql = "EXEC SP_Phuc_Hoi_Sua_Bo_De " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    
-                    if (kq.Equals("0")) //Sua thanh cong
+                    try
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-                        isSua = isThem = false;
-                        bdsBoDe.Position = bdsBoDe.Find("CAUHOI", redo.MaPosition);
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại bộ đề", "", MessageBoxButtons.OK);
+                        String kq = Program.myReader.GetString(0);
 
+                        if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+                            isSua = isThem = false;
+                            bdsBoDe.Position = bdsBoDe.Find("CAUHOI", redo.MaPosition);
+
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại bộ đề", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
+
                 }
                 else if (redo.Type.Equals("DELETE"))
                 {
                     //Neu them thi xoa no di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_Bo_De " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Bộ đề đã có trong chi tiết bài thi, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Bộ đề đã có trong chi tiết bài thi, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+
+                            if (Program.mGroup.Equals("GIANGVIEN"))
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                            }
+                            else
+                            {
+                                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                                this.tbBoDeADT.Fill(this.DS.BODE);
+                                this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                                this.tbDSGVienADT.Fill(this.DS.DSGV);
+                            }
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa bộ đề", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) // Xoa thanh cong
+                    catch (Exception ex)
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
-
-                        this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                        this.tbBoDeADT.Fill(this.DS.BODE);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa bộ đề", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
+
                 }
                 else return;
             }
@@ -472,8 +737,20 @@ namespace ThiTracNghiem
         {
             try
             {
-                this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
-                this.tbBoDeADT.Fill(this.DS.BODE);
+                if (Program.mGroup.Equals("GIANGVIEN"))
+                {
+                    this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                    this.tbBoDeADT.FillByGV(this.DS.BODE, Program.username);
+                    this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                    this.tbDSGVienADT.FillByMAGV(this.DS.DSGV, Program.username);
+                }
+                else
+                {
+                    this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
+                    this.tbBoDeADT.Fill(this.DS.BODE);
+                    this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
+                    this.tbDSGVienADT.Fill(this.DS.DSGV);
+                }
             }
             catch (Exception ex)
             {

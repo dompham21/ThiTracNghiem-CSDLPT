@@ -479,21 +479,20 @@
             // 
             this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "PASSWORD", true));
             this.txtPassword.Enabled = false;
-            this.txtPassword.Location = new System.Drawing.Point(414, 107);
+            this.txtPassword.Location = new System.Drawing.Point(110, 108);
             this.txtPassword.MenuManager = this.barManager2;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Properties.Appearance.Options.UseFont = true;
             this.txtPassword.Properties.PasswordChar = '*';
-            this.txtPassword.Properties.UseMaskAsDisplayFormat = false;
-            this.txtPassword.Size = new System.Drawing.Size(155, 24);
+            this.txtPassword.Size = new System.Drawing.Size(442, 24);
             this.txtPassword.TabIndex = 31;
             // 
             // labelControl3
             // 
             this.labelControl3.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelControl3.Appearance.Options.UseFont = true;
-            this.labelControl3.Location = new System.Drawing.Point(323, 110);
+            this.labelControl3.Location = new System.Drawing.Point(17, 111);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(56, 17);
             this.labelControl3.TabIndex = 30;
@@ -527,7 +526,7 @@
             this.dateNgaySinh.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.bdsSinhVien, "NGAYSINH", true));
             this.dateNgaySinh.EditValue = null;
             this.dateNgaySinh.Enabled = false;
-            this.dateNgaySinh.Location = new System.Drawing.Point(110, 107);
+            this.dateNgaySinh.Location = new System.Drawing.Point(414, 23);
             this.dateNgaySinh.MenuManager = this.barManager2;
             this.dateNgaySinh.Name = "dateNgaySinh";
             this.dateNgaySinh.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -538,13 +537,13 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.dateNgaySinh.Properties.CalendarTimeProperties.TimeEditStyle = DevExpress.XtraEditors.Repository.TimeEditStyle.TouchUI;
             this.dateNgaySinh.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.dateNgaySinh.Size = new System.Drawing.Size(149, 24);
+            this.dateNgaySinh.Size = new System.Drawing.Size(138, 24);
             this.dateNgaySinh.TabIndex = 19;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 107);
+            this.label2.Location = new System.Drawing.Point(319, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 17);
             this.label2.TabIndex = 18;
@@ -591,7 +590,7 @@
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDiaChi.Properties.Appearance.Options.UseFont = true;
-            this.txtDiaChi.Size = new System.Drawing.Size(361, 24);
+            this.txtDiaChi.Size = new System.Drawing.Size(442, 24);
             this.txtDiaChi.TabIndex = 12;
             // 
             // txtTenSV
@@ -603,7 +602,7 @@
             this.txtTenSV.Name = "txtTenSV";
             this.txtTenSV.Properties.Appearance.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTenSV.Properties.Appearance.Options.UseFont = true;
-            this.txtTenSV.Size = new System.Drawing.Size(155, 24);
+            this.txtTenSV.Size = new System.Drawing.Size(138, 24);
             this.txtTenSV.TabIndex = 11;
             // 
             // txtHoSV

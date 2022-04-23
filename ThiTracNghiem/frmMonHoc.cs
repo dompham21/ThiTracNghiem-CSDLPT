@@ -35,13 +35,10 @@ namespace ThiTracNghiem
 
 
 
-            // TODO: This line of code loads data into the 'tNDataSet.BANGDIEM' table. You can move, or remove it, as needed.
             this.tbBangDiemADT.Connection.ConnectionString = Program.connstr;
             this.tbBangDiemADT.Fill(this.DS.BANGDIEM);
-            // TODO: This line of code loads data into the 'tNDataSet.BODE' table. You can move, or remove it, as needed.
             this.tbBoDeADT.Connection.ConnectionString = Program.connstr;
             this.tbBoDeADT.Fill(this.DS.BODE);
-            // TODO: This line of code loads data into the 'tNDataSet.GIAOVIEN_DANGKY' table. You can move, or remove it, as needed.
             this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
             this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
 
@@ -66,14 +63,6 @@ namespace ThiTracNghiem
 
         }
 
-        private void mONHOCBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.bdsMonHoc.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.DS);
-
-        }
-        
 
         private void btnTaiLai_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -141,72 +130,91 @@ namespace ThiTracNghiem
             {
                 //Kiem tra ma va ten mon hoc ton tai
                 String sql = "EXEC SP_KT_MonHoc_Ton_Tai '" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'";
-
-                Program.myReader = Program.ExecSqlDataReader(sql);
-                if (Program.myReader == null) return;
-                Program.myReader.Read();
-
-                String kq = Program.myReader.GetString(0);
-                Program.myReader.Close();
-
-                if (kq.Equals("1"))
+                try
                 {
-                    txtMaMH.Focus();
-                    btnHuy.Enabled = btnGhi.Enabled = true;
-                    XtraMessageBox.Show("Mã môn học đã tồn tại, vui lòng nhập mã khác", "", MessageBoxButtons.OK);
-                    return;
+                    Program.myReader = Program.ExecSqlDataReader(sql);
+                    if (Program.myReader == null) return;
+                    Program.myReader.Read();
+
+                    String kq = Program.myReader.GetString(0);
+
+                    if (kq.Equals("1"))
+                    {
+                        txtMaMH.Focus();
+                        btnHuy.Enabled = btnGhi.Enabled = true;
+                        XtraMessageBox.Show("Mã môn học đã tồn tại, vui lòng nhập mã khác", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                    else if (kq.Equals("2"))
+                    {
+                        txtTenMH.Focus();
+                        btnHuy.Enabled = btnGhi.Enabled = true;
+                        XtraMessageBox.Show("Tên môn học đã tồn tại, vui lòng nhập tên khác", "", MessageBoxButtons.OK);
+                        return;
+                    }
+                    else
+                    {
+                        string maMH = txtMaMH.Text.Trim();
+
+                        stackUndo.Push(new Recovery("'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'", "INSERT", maMH));
+
+                        WriteToDB();
+                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
+
+                        isThem = false;
+                        XtraMessageBox.Show("Thêm môn học thành công!", "", MessageBoxButtons.OK);
+                        checkStateUndoRedo();
+                        return;
+                    }
                 }
-                else if (kq.Equals("2"))
+                catch (Exception ex)
                 {
-                    txtTenMH.Focus();
-                    btnHuy.Enabled = btnGhi.Enabled = true;
-                    XtraMessageBox.Show("Tên môn học đã tồn tại, vui lòng nhập tên khác", "", MessageBoxButtons.OK);
-                    return;
+                    XtraMessageBox.Show("Thêm môn học thất bại " + ex.Message, "", MessageBoxButtons.OK);
                 }
-                else
+                finally
                 {
-                    string maMH = txtMaMH.Text.Trim();
-
-                    stackUndo.Push(new Recovery("'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'", "INSERT", maMH));
-
-                    WriteToDB();
-
-                    bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
-
-                    isThem = false;
-
-
-                    checkStateUndoRedo();
-                    return;
-
+                    Program.myReader.Close();
 
                 }
+
             }
             else if (isSua)
             {
 
                 //Kiem tra ten mon hoc dang sua co ton tai khong 
                 String sql = "EXEC SP_KT_Sua_MonHoc_Ton_Tai '" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'";
-
-                int kq = Program.ExecSqlNonQuery(sql);
-
-                if (kq == 1)
+                try
                 {
-                    txtTenMH.Focus();
-                    return;
+                    int kq = Program.ExecSqlNonQuery(sql);
+
+                    if (kq == 1)
+                    {
+                        txtTenMH.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        string maMH = txtMaMH.Text.Trim();
+
+                        stackUndo.Push(new Recovery("'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'", beforeUpdateString, "UPDATE", txtMaMH.Text.Trim()));
+                        WriteToDB();
+                        isSua = false;
+                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
+
+                        checkStateUndoRedo();
+                        XtraMessageBox.Show("Sửa môn học thành công!", "", MessageBoxButtons.OK);
+                        return;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    string maMH = txtMaMH.Text.Trim();
-
-                    stackUndo.Push(new Recovery("'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'", beforeUpdateString, "UPDATE", txtMaMH.Text.Trim()));
-                    WriteToDB();
-                    isSua = false;
-                    bdsMonHoc.Position = bdsMonHoc.Find("MAMH", maMH);
-
-                    checkStateUndoRedo();
-                    return;
+                    XtraMessageBox.Show("Sửa môn học thất bại " + ex.Message, "", MessageBoxButtons.OK);
                 }
+                finally
+                {
+                    Program.conn.Close();
+                }
+                
             }
             else return;
 
@@ -224,6 +232,20 @@ namespace ThiTracNghiem
             if (txtTenMH.Text.Trim().Equals(""))
             {
                 XtraMessageBox.Show("Tên môn học không được để trống ", "", MessageBoxButtons.OK);
+                txtTenMH.Focus();
+                return false;
+            }
+
+            if (txtMaMH.Text.Trim().Length > 5)
+            {
+                XtraMessageBox.Show("Mã môn học không được lớn hơn 5 kí tự ", "", MessageBoxButtons.OK);
+                txtMaMH.Focus();
+                return false;
+            }
+
+            if (txtTenMH.Text.Trim().Length > 50)
+            {
+                XtraMessageBox.Show("Tên môn học không được lớn hơn 50 kí tự ", "", MessageBoxButtons.OK);
                 txtTenMH.Focus();
                 return false;
             }
@@ -327,6 +349,7 @@ namespace ThiTracNghiem
                         this.tbMonHoc.Connection.ConnectionString = Program.connstr;
                         this.tbMonHoc.Fill(this.DS.MONHOC);
                         checkStateUndoRedo();
+                        XtraMessageBox.Show("Xóa môn học thành công!", "", MessageBoxButtons.OK);
                     }
                     catch(Exception ex)
                     {
@@ -361,115 +384,166 @@ namespace ThiTracNghiem
                 {
                     //Neu them thi xoa no di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_MH " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
+                    try
+                    {
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
-                    {
-                        XtraMessageBox.Show("Môn học đã có trong bảng điểm, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("2"))
-                    {
-                        XtraMessageBox.Show("Môn học đã tồn tại trong bộ đề, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("3"))
-                    {
-                        XtraMessageBox.Show("Môn học đã tồn tại trong giảng viên đăng ký, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("0")) // Xoa thanh cong
-                    {
-                        stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Môn học đã có trong bảng điểm, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("2"))
+                        {
+                            XtraMessageBox.Show("Môn học đã tồn tại trong bộ đề, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("3"))
+                        {
+                            XtraMessageBox.Show("Môn học đã tồn tại trong giảng viên đăng ký, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, "INSERT", undo.MaPosition));
 
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa môn học", "", MessageBoxButtons.OK);
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa môn học", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("UPDATE"))
                 {
                     // Neu sua thi lay mamh va tenmh truoc khi sua
                     String sql = "EXEC SP_Phuc_Hoi_Sua_MH " + undo.SqlBeforeUpdateString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+                            isSua = isThem = false;
+
+                            bdsMonHoc.Position = bdsMonHoc.Find("MAMH", undo.MaPosition);
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại môn học", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) //Sua thanh cong
+                    catch (Exception ex)
                     {
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-                        isSua = isThem = false;
-
-                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", undo.MaPosition);
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.SqlBeforeUpdateString, undo.Type, undo.MaPosition));
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại môn học", "", MessageBoxButtons.OK);
-
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (undo.Type.Equals("DELETE"))
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_MH " + undo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Mã môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Mã môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("2"))
+                        {
+                            XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
+
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+                            bdsMonHoc.Position = bdsMonHoc.Find("MAMH", undo.MaPosition);
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại môn học", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("2"))
+                    catch (Exception ex)
                     {
-                        XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("0")) // Them thanh cong
-                    {
-                        stackRedo.Push(new Recovery(undo.SqlString, undo.Type, undo.MaPosition));
-
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", undo.MaPosition);
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại môn học", "", MessageBoxButtons.OK);
-
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else return;
                 
@@ -507,115 +581,166 @@ namespace ThiTracNghiem
                 {
                     //Them lai
                     String sql = "EXEC SP_Phuc_Hoi_Them_MH " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Mã môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Mã môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("2"))
+                        {
+                            XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Them thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+
+                            bdsMonHoc.Position = bdsMonHoc.Find("MAMH", redo.MaPosition);
+                            XtraMessageBox.Show("Phục hồi thành công, đã thêm lại môn học", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("2"))
+                    catch (Exception ex)
                     {
-                        XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("0")) // Them thanh cong
-                    {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
-
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-
-                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", redo.MaPosition);
-                        XtraMessageBox.Show("Phục hồi thành công, đã thêm lại môn học", "", MessageBoxButtons.OK);
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (redo.Type.Equals("UPDATE"))
                 {
                     //Neu sua thi lay maMh va tenMH sau khi sua
                     String sql = "EXEC SP_Phuc_Hoi_Sua_MH " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
-
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
+                    try
                     {
-                        XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
+
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Tên môn học đã tồn tại, không thể phục hồi", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) //Sua thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+                            isSua = isThem = false;
+                            bdsMonHoc.Position = bdsMonHoc.Find("MAMH", redo.MaPosition);
+
+                            XtraMessageBox.Show("Phục hồi thành công, đã sửa lại môn học", "", MessageBoxButtons.OK);
+
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
                     }
-                    else if (kq.Equals("0")) //Sua thanh cong
+                    catch (Exception ex)
                     {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.SqlBeforeUpdateString, redo.Type, redo.MaPosition));
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-                        isSua = isThem = false;
-                        bdsMonHoc.Position = bdsMonHoc.Find("MAMH", redo.MaPosition);
-
-                        XtraMessageBox.Show("Phục hồi thành công, đã sửa lại môn học", "", MessageBoxButtons.OK);
-
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else if (redo.Type.Equals("DELETE"))
                 {
                     //Xoa di
                     String sql = "EXEC SP_Phuc_Hoi_Xoa_MH " + redo.SqlString;
-                    Program.myReader = Program.ExecSqlDataReader(sql);
-                    if (Program.myReader == null) return;
-                    Program.myReader.Read();
+                    try
+                    {
+                        Program.myReader = Program.ExecSqlDataReader(sql);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
-                    String kq = Program.myReader.GetString(0);
-                    Program.myReader.Close();
-                    if (kq.Equals("1"))
-                    {
-                        XtraMessageBox.Show("Môn học đã có trong bảng điểm, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("2"))
-                    {
-                        XtraMessageBox.Show("Môn học đã tồn tại trong bộ đề, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("3"))
-                    {
-                        XtraMessageBox.Show("Môn học đã tồn tại trong giảng viên đăng ký, không thể xóa", "", MessageBoxButtons.OK);
-                        return;
-                    }
-                    else if (kq.Equals("0")) // Xoa thanh cong
-                    {
-                        stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
+                        String kq = Program.myReader.GetString(0);
+                        if (kq.Equals("1"))
+                        {
+                            XtraMessageBox.Show("Môn học đã có trong bảng điểm, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("2"))
+                        {
+                            XtraMessageBox.Show("Môn học đã tồn tại trong bộ đề, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("3"))
+                        {
+                            XtraMessageBox.Show("Môn học đã tồn tại trong giảng viên đăng ký, không thể xóa", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else if (kq.Equals("0")) // Xoa thanh cong
+                        {
+                            stackUndo.Push(new Recovery(redo.SqlString, redo.Type, redo.MaPosition));
 
-                        this.tbMonHoc.Connection.ConnectionString = Program.connstr;
-                        this.tbMonHoc.Fill(this.DS.MONHOC);
-                        XtraMessageBox.Show("Phục hồi thành công, đã xóa môn học", "", MessageBoxButtons.OK);
+                            this.tbMonHoc.Connection.ConnectionString = Program.connstr;
+                            this.tbMonHoc.Fill(this.DS.MONHOC);
+                            XtraMessageBox.Show("Phục hồi thành công, đã xóa môn học", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
+                            checkStateUndoRedo();
+                            return;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Phục hồi thất bại " + ex.Message, "", MessageBoxButtons.OK);
                         checkStateUndoRedo();
                         return;
                     }
-                    else
+                    finally
                     {
-                        XtraMessageBox.Show("Phục hồi thất bại", "", MessageBoxButtons.OK);
-                        return;
+                        Program.myReader.Close();
+
                     }
+
                 }
                 else return;
             }

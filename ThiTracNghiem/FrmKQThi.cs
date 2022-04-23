@@ -20,6 +20,9 @@ namespace ThiTracNghiem
         public static int lan;
         public static string ngayThi = "";
         public static int thoiGian;
+        public static string maLop = "";
+        public static string tenLop = "";
+
         public FrmKQThi()
         {
             InitializeComponent();
@@ -32,7 +35,7 @@ namespace ThiTracNghiem
             Nhom.Text = "Nhóm: " + Program.mGroup;
             labelSoCau.Text = socau.ToString();
             labelSoCauDung.Text = soCauDung.ToString();
-            labelDiem.Text = diem.ToString();
+            labelDiem.Text = diem.ToString() + " điểm";
 
             txtSoCauHoi.Text = socau.ToString();
             txtMaMon.Text = maMH;
@@ -40,6 +43,20 @@ namespace ThiTracNghiem
             txtLan.Text = lan.ToString();
             dateNgayThi.Text = ngayThi;
             txtThoiGian.Text = thoiGian.ToString();
+            if(Program.mGroup == "SINHVIEN")
+            {
+                gbInfoSV.Visible = true;
+                txtHoTen.Text = Program.mHoten;
+                txtMaSV.Text = Program.username;
+                txtMaLop.Text = maLop;
+                txtTenLop.Text = tenLop;
+            }
+            else
+            {
+                gbInfoSV.Visible = false;
+            }
+            
+
 
         }
 
@@ -48,6 +65,5 @@ namespace ThiTracNghiem
             this.Close();
         }
 
-      
     }
 }

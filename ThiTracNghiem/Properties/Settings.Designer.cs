@@ -26,7 +26,8 @@ namespace ThiTracNghiem.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-A8S0739\\SERVER1;Initial Catalog=TN_CSDLPT;User ID=sa")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-A8S0739\\SERVER1;Initial Catalog=TN_CSDLPT;User ID=sa;password" +
+            "=123456")]
         public string TN_CSDLPTConnectionString {
             get {
                 return ((string)(this["TN_CSDLPTConnectionString"]));

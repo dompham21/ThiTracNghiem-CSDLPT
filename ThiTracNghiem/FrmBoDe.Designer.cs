@@ -71,7 +71,7 @@
             this.cbbTrinhDo = new System.Windows.Forms.ComboBox();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.cbbTenGV = new System.Windows.Forms.ComboBox();
-            this.bdsGiaoVien = new System.Windows.Forms.BindingSource(this.components);
+            this.bdsDSGV = new System.Windows.Forms.BindingSource(this.components);
             this.txtMaGV = new DevExpress.XtraEditors.TextEdit();
             this.labelMaKhoa = new DevExpress.XtraEditors.LabelControl();
             this.labelTenKhoa = new DevExpress.XtraEditors.LabelControl();
@@ -91,10 +91,10 @@
             this.colD = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDAP_AN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMAGV = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tbGVienADT = new ThiTracNghiem.DSTableAdapters.GIAOVIENTableAdapter();
             this.tbMonHocADT = new ThiTracNghiem.DSTableAdapters.MONHOCTableAdapter();
             this.bdsCTBT = new System.Windows.Forms.BindingSource(this.components);
             this.tbCTBThiADT = new ThiTracNghiem.DSTableAdapters.CT_BAITHITableAdapter();
+            this.tbDSGVienADT = new ThiTracNghiem.DSTableAdapters.DSGVTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -103,7 +103,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMon.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsGiaoVien)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaCH.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcBoDe)).BeginInit();
@@ -260,16 +260,16 @@
             this.barDockControl1.Location = new System.Drawing.Point(0, 0);
             this.barDockControl1.Manager = this.barManager2;
             this.barDockControl1.Margin = new System.Windows.Forms.Padding(1);
-            this.barDockControl1.Size = new System.Drawing.Size(1284, 40);
+            this.barDockControl1.Size = new System.Drawing.Size(979, 40);
             // 
             // barDockControl2
             // 
             this.barDockControl2.CausesValidation = false;
             this.barDockControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl2.Location = new System.Drawing.Point(0, 781);
+            this.barDockControl2.Location = new System.Drawing.Point(0, 610);
             this.barDockControl2.Manager = this.barManager2;
             this.barDockControl2.Margin = new System.Windows.Forms.Padding(1);
-            this.barDockControl2.Size = new System.Drawing.Size(1284, 0);
+            this.barDockControl2.Size = new System.Drawing.Size(979, 0);
             // 
             // barDockControl3
             // 
@@ -278,16 +278,16 @@
             this.barDockControl3.Location = new System.Drawing.Point(0, 40);
             this.barDockControl3.Manager = this.barManager2;
             this.barDockControl3.Margin = new System.Windows.Forms.Padding(1);
-            this.barDockControl3.Size = new System.Drawing.Size(0, 741);
+            this.barDockControl3.Size = new System.Drawing.Size(0, 570);
             // 
             // barDockControl4
             // 
             this.barDockControl4.CausesValidation = false;
             this.barDockControl4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl4.Location = new System.Drawing.Point(1284, 40);
+            this.barDockControl4.Location = new System.Drawing.Point(979, 40);
             this.barDockControl4.Manager = this.barManager2;
             this.barDockControl4.Margin = new System.Windows.Forms.Padding(1);
-            this.barDockControl4.Size = new System.Drawing.Size(0, 741);
+            this.barDockControl4.Size = new System.Drawing.Size(0, 570);
             // 
             // DS
             // 
@@ -321,10 +321,10 @@
             this.panelControl1.Controls.Add(this.mAMHLabel);
             this.panelControl1.Controls.Add(this.txtMaCH);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelControl1.Location = new System.Drawing.Point(0, 363);
+            this.panelControl1.Location = new System.Drawing.Point(0, 192);
             this.panelControl1.Margin = new System.Windows.Forms.Padding(1);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1284, 418);
+            this.panelControl1.Size = new System.Drawing.Size(979, 418);
             this.panelControl1.TabIndex = 26;
             // 
             // cbbDapAn
@@ -537,7 +537,7 @@
             // cbbTenGV
             // 
             this.cbbTenGV.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.bdsBoDe, "MAGV", true));
-            this.cbbTenGV.DataSource = this.bdsGiaoVien;
+            this.cbbTenGV.DataSource = this.bdsDSGV;
             this.cbbTenGV.DisplayMember = "TEN";
             this.cbbTenGV.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbTenGV.Enabled = false;
@@ -550,10 +550,10 @@
             this.cbbTenGV.ValueMember = "MAGV";
             this.cbbTenGV.SelectedIndexChanged += new System.EventHandler(this.cbbTenGV_SelectedIndexChanged);
             // 
-            // bdsGiaoVien
+            // bdsDSGV
             // 
-            this.bdsGiaoVien.DataMember = "GIAOVIEN";
-            this.bdsGiaoVien.DataSource = this.DS;
+            this.bdsDSGV.DataMember = "DSGV";
+            this.bdsDSGV.DataSource = this.DS;
             // 
             // txtMaGV
             // 
@@ -639,7 +639,7 @@
             this.gcBoDe.MainView = this.gridView1;
             this.gcBoDe.MenuManager = this.barManager2;
             this.gcBoDe.Name = "gcBoDe";
-            this.gcBoDe.Size = new System.Drawing.Size(1284, 323);
+            this.gcBoDe.Size = new System.Drawing.Size(979, 152);
             this.gcBoDe.TabIndex = 31;
             this.gcBoDe.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -774,10 +774,6 @@
             this.colMAGV.VisibleIndex = 2;
             this.colMAGV.Width = 74;
             // 
-            // tbGVienADT
-            // 
-            this.tbGVienADT.ClearBeforeFill = true;
-            // 
             // tbMonHocADT
             // 
             this.tbMonHocADT.ClearBeforeFill = true;
@@ -791,12 +787,16 @@
             // 
             this.tbCTBThiADT.ClearBeforeFill = true;
             // 
+            // tbDSGVienADT
+            // 
+            this.tbDSGVienADT.ClearBeforeFill = true;
+            // 
             // FrmBoDe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1284, 781);
+            this.ClientSize = new System.Drawing.Size(979, 610);
             this.Controls.Add(this.gcBoDe);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.barDockControl3);
@@ -817,7 +817,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdsBoDe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsMonHoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaMon.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bdsGiaoVien)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bdsDSGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaGV.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaCH.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcBoDe)).EndInit();
@@ -890,11 +890,11 @@
         private System.Windows.Forms.RichTextBox rtxtB;
         private System.Windows.Forms.RichTextBox rtxtC;
         private System.Windows.Forms.RichTextBox rtxtA;
-        private System.Windows.Forms.BindingSource bdsGiaoVien;
-        private DSTableAdapters.GIAOVIENTableAdapter tbGVienADT;
         private System.Windows.Forms.BindingSource bdsMonHoc;
         private DSTableAdapters.MONHOCTableAdapter tbMonHocADT;
         private System.Windows.Forms.BindingSource bdsCTBT;
         private DSTableAdapters.CT_BAITHITableAdapter tbCTBThiADT;
+        private System.Windows.Forms.BindingSource bdsDSGV;
+        private DSTableAdapters.DSGVTableAdapter tbDSGVienADT;
     }
 }
