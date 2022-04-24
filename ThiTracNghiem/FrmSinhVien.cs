@@ -166,7 +166,8 @@ namespace ThiTracNghiem
                 isThem = true;
                 txtMaSV.Enabled = txtHoSV.Enabled = txtTenSV.Enabled = txtDiaChi.Enabled = dateNgaySinh.Enabled = txtPassword.Enabled = true;
                 txtMaSV.Focus();
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -306,6 +307,7 @@ namespace ThiTracNghiem
             this.tbSinhVienADT.Connection.ConnectionString = Program.connstr;
             this.tbSinhVienADT.Fill(this.DS.SINHVIEN);
             gcLop.Enabled = true;
+            checkStateUndoRedo();
         }
 
         private void btnSua_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -322,7 +324,8 @@ namespace ThiTracNghiem
                 txtHoSV.Enabled = txtTenSV.Enabled = txtDiaChi.Enabled = dateNgaySinh.Enabled = txtPassword.Enabled = true;
                 txtMaLop.Enabled = false;
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled  
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforePassword = txtPassword.Text.Trim();
                 beforeUpdateString = "N'" + txtMaSV.Text.Trim() + "', N'" + txtHoSV.Text.Trim() + "', N'"
                     + txtTenSV.Text.Trim() + "', N'" + txtDiaChi.Text.Trim() + "', '" + dateNgaySinh.Text.Trim()  

@@ -149,7 +149,8 @@ namespace ThiTracNghiem
                 txtMaGV.Enabled = txtHoGV.Enabled = txtTenGV.Enabled = txtDiaChi.Enabled = true;
                 txtMaKhoa.Enabled = false;
                 txtMaGV.Focus();
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
 
             }
             catch (Exception ex)
@@ -172,7 +173,8 @@ namespace ThiTracNghiem
                 txtHoGV.Enabled = txtTenGV.Enabled = txtDiaChi.Enabled = true;
                 txtMaKhoa.Enabled = cbbTenKhoa.Enabled = false;
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforeUpdateString = "N'" + txtMaGV.Text.Trim() + "', N'" + txtHoGV.Text.Trim() + "', N'"
                     + txtTenGV.Text.Trim() + "', N'" + txtDiaChi.Text.Trim() + "', N'" + txtMaKhoa.Text.Trim() + "'";
             }
@@ -588,6 +590,7 @@ namespace ThiTracNghiem
             this.tbGiaoVienADT.Connection.ConnectionString = Program.connstr;
             this.tbGiaoVienADT.Fill(this.DS.GIAOVIEN);
             gcKhoa.Enabled = gcGiaoVien.Enabled = true;
+            checkStateUndoRedo();
 
         }
 

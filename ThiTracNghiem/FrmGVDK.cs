@@ -161,7 +161,8 @@ namespace ThiTracNghiem
                 dateNgayThi.Properties.MinValue = DateTime.Today;
                 isThem = true;
                 cbbTrinhDo.SelectedIndex = cbbLanThi.SelectedIndex = -1;
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled
+                    = btnUndo.Enabled = btnRedo.Enabled = false;
                 numThoiGian.Value = 15;
                 numSoCau.Value = 10;
             }
@@ -185,7 +186,8 @@ namespace ThiTracNghiem
                 cbbTenMon.Enabled = cbbTenLop.Enabled = cbbLanThi.Enabled = false;
                 cbbTenGV.Focus();
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled 
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforeUpdateString = "N'" + txtMaGV.Text.Trim() + "', N'" + txtMaLop.Text.Trim()
                                                    + "', N'" + txtMaMon.Text.Trim() + "', N'" + cbbTrinhDo.Text.Trim() + "', " + cbbLanThi.Text.Trim()
                                                    + ", '" + dateNgayThi.DateTime + "', " + numSoCau.Value + ", " + numThoiGian.Value;
@@ -273,6 +275,7 @@ namespace ThiTracNghiem
             this.tbGVDKyADT.Connection.ConnectionString = Program.connstr;
             this.tbGVDKyADT.Fill(this.DS.GIAOVIEN_DANGKY);
             gcGVDK.Enabled = true;
+            checkStateUndoRedo();
 
         }
 

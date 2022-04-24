@@ -90,7 +90,7 @@ namespace ThiTracNghiem
                 isThem = true;
                 txtTenMH.Enabled = txtMaMH.Enabled = true;
                 txtMaMH.Focus();
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 
             }
             catch (Exception ex)
@@ -266,7 +266,7 @@ namespace ThiTracNghiem
                 txtTenMH.Enabled = true;
                 txtMaMH.Enabled = false;
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforeUpdateString = "'" + txtMaMH.Text.Trim() + "', N'" + txtTenMH.Text.Trim() + "'";
             }
         }
@@ -282,6 +282,7 @@ namespace ThiTracNghiem
             this.tbMonHoc.Connection.ConnectionString = Program.connstr;
             this.tbMonHoc.Fill(this.DS.MONHOC);
             gcMonHoc.Enabled = true;
+            checkStateUndoRedo();
 
         }
 

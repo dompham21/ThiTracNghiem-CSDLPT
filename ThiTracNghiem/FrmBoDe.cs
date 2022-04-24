@@ -131,7 +131,8 @@ namespace ThiTracNghiem
                 txtMaCH.Enabled = cbbTenMon.Enabled = cbbDapAn.Enabled =
                     cbbTrinhDo.Enabled = rtxtA.Enabled = rtxtB.Enabled = rtxtC.Enabled = rtxtD.Enabled = rtxtNoiDung.Enabled = true;
                 txtMaCH.Focus();
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled 
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 cbbDapAn.SelectedIndex = cbbTrinhDo.SelectedIndex = -1;
                 if (Program.mGroup.Equals("GIANGVIEN"))
                 {
@@ -174,7 +175,8 @@ namespace ThiTracNghiem
                 txtMaCH.Enabled = false;
                 rtxtNoiDung.Focus();
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled 
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforeUpdateString = txtMaCH.Text.Trim() + ", N'" + txtMaMon.Text.Trim() + "', N'" + txtMaGV.Text.Trim() + "',N'" +
                     cbbTrinhDo.Text.Trim() + "', N'" + cbbDapAn.Text.Trim() + "', N'" + rtxtNoiDung.Text.Trim() + "', N'" +
                     rtxtA.Text.Trim() + "', N'" + rtxtB.Text.Trim() + "', N'" + rtxtC.Text.Trim() + "', N'" + rtxtD.Text.Trim() + "'";
@@ -275,6 +277,7 @@ namespace ThiTracNghiem
                 this.tbDSGVienADT.Connection.ConnectionString = Program.connstr;
                 this.tbDSGVienADT.Fill(this.DS.DSGV);
             }
+            checkStateUndoRedo();
             gcBoDe.Enabled = true;
         }
 

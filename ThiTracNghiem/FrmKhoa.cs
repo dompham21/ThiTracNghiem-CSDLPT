@@ -113,7 +113,7 @@ namespace ThiTracNghiem
                 ctxMenuLop.Enabled = false;
                 txtMaKhoa.Enabled = txtTenKhoa.Enabled = true;
                 txtMaKhoa.Focus();
-                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
 
             }
             catch (Exception ex)
@@ -403,6 +403,7 @@ namespace ThiTracNghiem
             this.tbKhoaADT.Fill(this.DS.KHOA);
             gcKhoa.Enabled = gcLop.Enabled = true;
             ctxMenuLop.Enabled = true;
+            checkStateUndoRedo();
         }
 
         private void cbbCoSo_SelectedIndexChanged(object sender, EventArgs e)
@@ -489,7 +490,8 @@ namespace ThiTracNghiem
                 txtMaKhoa.Enabled = false;
                 txtTenKhoa.Focus();
                 isSua = true;
-                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled = btnXoa.Enabled = false;
+                btnThem.Enabled = btnTaiLai.Enabled = btnSua.Enabled
+                    = btnUndo.Enabled = btnRedo.Enabled = btnXoa.Enabled = false;
                 beforeUpdateString = "N'" + txtMaKhoa.Text.Trim() + "', N'" + txtTenKhoa.Text.Trim() + "', N'" + txtCoSo.Text.Trim() + "'";
             }
         }
@@ -893,7 +895,8 @@ namespace ThiTracNghiem
                 isThemLop = true;
                 txtMaLop.Enabled = txtTenLop.Enabled = true;
                 txtMaLop.Focus();
-                btnThemLop.Enabled = btnSuaLop.Enabled = btnTaiLaiLop.Enabled = btnXoaLop.Enabled = false;
+                btnThemLop.Enabled = btnSuaLop.Enabled = btnTaiLaiLop.Enabled =
+                    btnUndoLop.Enabled = btnRedoLop.Enabled = btnXoaLop.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -917,7 +920,8 @@ namespace ThiTracNghiem
                 txtMaLop.Enabled = false;
                 txtTenLop.Focus();
                 isSuaLop = true;
-                btnThemLop.Enabled = btnTaiLaiLop.Enabled = btnSuaLop.Enabled = btnXoaLop.Enabled = false;
+                btnThemLop.Enabled = btnTaiLaiLop.Enabled = btnSuaLop.Enabled 
+                    = btnXoaLop.Enabled = btnUndoLop.Enabled = btnRedoLop.Enabled = false;
                 beforeUpdateStringLop = "'" + txtMaLop.Text.Trim() + "', N'" + txtTenLop.Text.Trim() + "', N'" + txtMaKhoaLop.Text.Trim() + "'";
             }
         }
@@ -977,7 +981,6 @@ namespace ThiTracNghiem
         private void btnHuyLop_Click(object sender, EventArgs e)
         {
             btnThem.Enabled = btnSua.Enabled = btnTaiLai.Enabled = btnXoa.Enabled = true;
-            checkStateUndoRedo();
 
             bdsLop.CancelEdit();
             btnHuyLop.Enabled = btnGhiLop.Enabled = false;
@@ -988,6 +991,8 @@ namespace ThiTracNghiem
             this.tbLopADT.Connection.ConnectionString = Program.connstr;
             this.tbLopADT.Fill(this.DS.LOP);
             gcLop.Enabled = gcKhoa.Enabled = true;
+            checkStateUndoRedoLop();
+
         }
 
         private void btnGhiLop_Click(object sender, EventArgs e)
