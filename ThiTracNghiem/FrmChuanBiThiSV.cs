@@ -101,8 +101,11 @@ namespace ThiTracNghiem
                 cbbLanThi.Focus();
                 return;
             }
-            //Kiem tra sinhvien da thi lan 1 chua
-            //Kiem tra sinhvien da thi chua 
+            
+
+
+
+
             String sql = "EXEC SP_GET_GVDK N'" + txtMaLop.Text.Trim() + "', N'" + txtMaMon.Text.Trim() + "', '" + dateNgayThi.DateTime.ToString() + "', " + cbbLanThi.Text.Trim() + "";
             try
             {
@@ -148,7 +151,39 @@ namespace ThiTracNghiem
             {
                 String maMH = ((DataRowView)this.bdsGVDK.Current).Row["MAMH"].ToString().Trim();
                 int lan = Int32.Parse(((DataRowView)this.bdsGVDK.Current).Row["LAN"].ToString().Trim());
+                //Kiem tra sinhvien da thi lan 1 chua
+                if(lan == 2)
+                {
+                    String ktlan1 = "exec SP_KT_Lan_Thi N'"
+                                       + Program.username + "', N'"
+                                       + maMH + "', "
+                                       + 1;
+                    try
+                    {
+                        Program.myReader = Program.ExecSqlDataReader(ktlan1);
+                        if (Program.myReader == null) return;
+                        Program.myReader.Read();
 
+                        String kq = Program.myReader.GetString(0);
+                        Program.myReader.Close();
+
+                        if (kq.Equals("0")) //Chua thi lan 1
+                        {
+                            XtraMessageBox.Show("Sinh viên chưa thi lần một, không thể thi lần hai", "", MessageBoxButtons.OK);
+                            return;
+                        }
+                       
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show("Lỗi " + ex.Message, "", MessageBoxButtons.OK);
+                        Program.myReader.Close();
+
+                    }
+                }
+
+
+                //Kiem tra sinhvien da thi chua 
                 String ktlan = "exec SP_KT_Lan_Thi N'"
                     + Program.username + "', N'"
                     + maMH + "', "
